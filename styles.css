@@ -38,3 +38,222 @@
 /* Ensure weight is bold even on devices without the optional web font. */
 .subpage-title,.sub-art-circle,.sub-art-circle span,.next-page-banner h2,.event-end-panel h2,.story-tile h3,.origin-comic-panel h3,.featured-content h3,.archive-card h4,.archive-top h3,.contact-inner h2,.placeholder-art,.cover-big-title{font-weight:900}
 .event-body h3,.cover-stamp,.speech-bubble,.archive-art-stamp{font-weight:900}
+
+/* === Editorial clean-up: same comic DNA, fewer competing details === */
+:root {
+  --hard: 4px 5px 0 var(--ink);
+}
+.page-grain { display: none; }
+.shell { max-width: 1360px; }
+.site-header .nav-inner { box-shadow: 3px 4px 0 var(--ink); }
+.brand { gap: 12px; }
+.brand-symbol { box-shadow: none; }
+.nav-links { gap: clamp(15px, 2vw, 28px); }
+.chapter-label { gap: 13px; margin-bottom: 25px; letter-spacing: .9px; }
+.number-block { box-shadow: none; }
+.mini-kicker { font-size: 12px; letter-spacing: .8px; }
+.comic-button { box-shadow: 3px 4px 0 var(--ink); }
+.button-ink { box-shadow: 3px 4px 0 var(--violet); }
+
+/* One striking central illustration instead of a pile of small stickers. */
+.hero { padding-bottom: 35px; }
+.hero-frame { box-shadow: 5px 6px 0 var(--ink); }
+.hero-copy { padding-bottom: clamp(45px, 5vw, 75px); }
+.hero-eyebrow { margin-bottom: 37px; letter-spacing: .9px; }
+.hero-title { margin-bottom: 33px; }
+.hero-title .shah { text-shadow: 3px 4px 0 var(--ink); }
+.hero-description { max-width: 440px; font-size: 16px; line-height: 1.7; margin-bottom: 30px; }
+.hero-actions { gap: 17px; }
+.hero-world { background: #7562db; }
+.hero-world:before { opacity: 0; }
+.hero-world:after {
+  content: '';
+  position: absolute;
+  width: 85%; aspect-ratio: 1;
+  left: 7%; top: 5%;
+  border: 2px solid rgba(255,255,255,.14);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-monitor { left: 11%; top: 24%; width: 77%; height: 58%; transform: rotate(-5deg); filter: drop-shadow(8px 11px 0 rgba(12,12,15,.16)); }
+.speech-bubble { top: 9%; right: 5%; box-shadow: 3px 4px 0 var(--ink); transform: rotate(7deg); }
+.speech-bubble:after { display: none; }
+.hero-down { margin-top: 29px; gap: 12px; letter-spacing: 1px; font-size: 10px; color: #777067; }
+.scroll-chevron { border-width: 1.5px; width: 32px; height: 32px; }
+.marquee-strip { transform: none; margin-top: 0; border: 0; }
+.marquee-track span { font-size: 25px; padding: 14px 24px; }
+
+/* Give the origin panel space to breathe. */
+.origin-section { padding: 135px 0; }
+.origin-layout { gap: clamp(50px,7vw,105px); }
+.origin-comic-panel { transform: none; box-shadow: 5px 6px 0 var(--ink); padding: 30px; border-width: 2px; border-radius: 12px; }
+.origin-comic-panel:before { display: none; }
+.origin-card-visual { height: 245px; }
+.origin-face { box-shadow: 6px 7px 0 var(--ink); transform: rotate(-8deg); }
+.skill-bubbles { gap: 8px; margin-top: 20px; }
+.skill-bubbles span, .skill-bubbles span:nth-child(2) { transform: none; font-size: 11px; padding: 9px 12px; border-width: 1.5px; border-radius: 20px; }
+.stats-row { gap: 18px; }
+.stats-row strong { margin-bottom: 8px; }
+.stats-row small { font-size: 10px; letter-spacing: .25px; line-height: 1.35; }
+
+/* More legible project cards with artwork acting as a quiet backdrop. */
+.projects-section { background: #ece8fc; padding-top: 125px; padding-bottom: 130px; }
+.projects-section:before { display: none; }
+.section-side-note p { font-size: 16px; line-height: 1.6; font-weight: 500; color: #5c5666; }
+.project-scroll-note { font-size: 11px; gap: 12px; padding-top: 20px; margin-top: 43px; letter-spacing: .6px; }
+.project-scroll-scene { margin-top: 45px; }
+.project-track { gap: 30px; }
+.featured-project { grid-template-rows: 235px 1fr; height: min(622px,calc(100vh - 175px)); min-height: 560px; border: 2px solid var(--ink); border-radius: 12px; box-shadow: 4px 5px 0 var(--ink); }
+.featured-project:hover { box-shadow: 6px 7px 0 var(--ink); }
+.featured-cover { padding: 25px 28px; border-bottom: 2px solid var(--ink); }
+.featured-cover:before, .archive-card-art:before { display: none; }
+.cover-shape-one { top: -18%; right: 3%; font-size: 230px; line-height: 1; opacity: .17; color: #171717; -webkit-text-stroke: 0; text-shadow: none; transform: rotate(-10deg); }
+.cover-big-title { max-width: 93%; font-size: clamp(36px,3.55vw,57px); text-shadow: none; letter-spacing: -.07em; line-height: .97; overflow-wrap: anywhere; }
+.featured-content { padding: 23px 28px 26px; }
+.project-number-line { font-size: 11px; color: #56504d; letter-spacing: .35px; }
+.featured-content h3 { font-size: clamp(27px,2.9vw,40px); letter-spacing: -.055em; margin: 13px 0 13px; }
+.featured-description { font-size: 14px; line-height: 1.6; -webkit-line-clamp: 4; margin: 0 0 20px; color: #4e4944; }
+.tag-list { gap: 8px; }
+.tag-list span { font-size: 11px; font-weight: 700; border: 1px solid #d4cfd3; background: #f5f2f1; border-radius: 20px; padding: 5px 10px; }
+.featured-actions { margin-top: auto; padding-top: 16px; border-top: 1px solid #dfd9d1; }
+.featured-actions a, .archive-links a { font-size: 12px; }
+.project-scene-bottom > span { display: none; }
+.project-scene-progress { height: 5px; max-width: 440px; margin-inline: auto; border: 0; border-radius: 50px; overflow: hidden; }
+.archive-wrap { padding-top: 110px; }
+.archive-top { margin-bottom: 37px; }
+.archive-card { border-width: 2px; border-radius: 12px; box-shadow: 4px 5px 0 var(--ink); }
+.archive-card-art { border-right-width: 2px; }
+.archive-card-art .cover-shape-one { font-size: 190px; left: 14%; top: 18%; opacity: .32; }
+.archive-card-main { padding: 26px; }
+.archive-card-eyebrow { font-size: 11px; letter-spacing: .25px; }
+.archive-card h4 { margin: 18px 0 12px; }
+.archive-card p { font-size: 14px; line-height: 1.62; }
+.archive-card .tag-list span { font-size: 10px; }
+.archive-cta { margin-top: 55px; }
+
+/* Keep the two big comic chapter cards; lose the filler micro-captions. */
+.split-story-section { padding: 135px 0; }
+.split-story-grid { gap: 35px; }
+.story-tile { padding: 30px 32px 35px; border-width: 2px; border-radius: 12px; box-shadow: 5px 6px 0 var(--ink); }
+.story-tile:hover { box-shadow: 7px 8px 0 var(--ink); }
+.story-tile-art { height: 245px; }
+.story-tile-art:before { box-shadow: 6px 7px 0 var(--ink); }
+.big-art-word { text-shadow: 3px 4px 0 var(--ink); }
+.story-tile p { font-size: 15px; line-height: 1.65; }
+.story-link { font-size: 12px; }
+.contact-section:before { opacity: .25; }
+.contact-inner { max-width: 900px; }
+.contact-inner > p { font-size: 17px; }
+
+/* Subpages: one bold emblem with no extra stickers or halftone noise. */
+.subpage-hero { padding: 145px 0 90px; }
+.subpage-hero:after { display: none; }
+.subhero-layout { gap: 70px; }
+.subpage-title > span { text-shadow: 3px 4px 0 var(--ink); }
+.subpage-desc { line-height: 1.7; }
+.subpage-art { min-height: 445px; }
+.sub-art-circle { width: min(340px, 90%); border-width: 3px; box-shadow: 8px 9px 0 var(--ink); transform: rotate(7deg); }
+
+/* Timeline: text and dates lead, not floating icons. */
+.work-section, .event-section { padding-top: 120px; padding-bottom: 130px; }
+.work-section-top > p { max-width: 290px; font-size: 15px; font-weight: 500; line-height: 1.6; color: #5a554e; }
+.filter-row { padding: 38px 0 22px; border-bottom: 1px solid #bfb8aa; }
+.filter-pill { box-shadow: none; border-width: 1.5px; font-size: 12px; padding: 11px 19px; }
+.filter-pill.is-active { box-shadow: none; }
+.experience-card { grid-template-columns: 82px minmax(0,1fr); gap: 35px; padding: 48px 0; border-bottom: 1px solid #bfb8aa; }
+.exp-index { font-size: 40px; letter-spacing: -.06em; }
+.exp-meta { font-size: 11px; letter-spacing: .3px; }
+.exp-main h3 { margin: 15px 0 8px; }
+.exp-main h4 { margin-bottom: 17px; }
+.exp-quote { font-family: var(--body); font-size: 16px; line-height: 1.6; font-weight: 600; color: #48433e; max-width: 750px; margin: 0 0 18px; }
+.exp-main li { font-size: 15px; line-height: 1.7; }
+
+/* Photo placeholders remain editable, but are no longer noisy artwork. */
+.event-topline { margin-bottom: 48px; }
+.event-grid { gap: 35px; }
+.event-card { border-width: 2px; border-radius: 12px; box-shadow: 4px 5px 0 var(--ink); }
+.event-card:nth-child(even) { transform: none; }
+.event-photo { border-bottom-width: 2px; height: 325px; }
+.photo-placeholder:before, .photo-placeholder:after { display: none; }
+.placeholder-art { font-size: 180px; opacity: .22; color: #151515; -webkit-text-stroke: 0; text-shadow: none; transform: rotate(-8deg); }
+.photo-placeholder strong { font-size: clamp(27px,3vw,42px); max-width: 80%; transform: none; text-shadow: none; }
+.event-body { padding: 30px; }
+.event-meta { font-size: 12px; letter-spacing: .45px; }
+.event-body h3 { margin: 17px 0 12px; }
+.event-body > p:not(.event-org) { font-size: 15px; line-height: 1.7; color: #56514a; }
+.event-role { font-size: 12px; border-top: 1px solid #d5cfc8; }
+.event-role strong { font-weight: 800; }
+
+@media (max-width: 1190px) {
+  .featured-project { grid-template-rows: 205px 1fr; }
+  .featured-content { padding: 22px; }
+  .featured-description { font-size: 13px; }
+}
+@media (max-width: 899px) {
+  .hero-frame { grid-template-columns: 1fr; }
+  .hero-copy { padding-bottom: 52px; }
+  .hero-world { border-left: 0; }
+  .featured-project { grid-template-rows: 215px 1fr; height: 575px; min-height: 0; }
+  .project-track { gap: 22px; }
+  .project-scene-bottom { display: none; }
+  .origin-comic-panel { transform: none; }
+  .story-tile-art { height: 220px; }
+  .subhero-layout { gap: 25px; }
+  .subpage-art { min-height: 345px; }
+  .sub-art-circle { width: min(280px,90%); }
+}
+@media (max-width: 650px) {
+  .hero-copy { padding: 35px 25px 40px; }
+  .hero-eyebrow { font-size: 10px; margin-bottom: 35px; }
+  .hero-title { margin-bottom: 34px; }
+  .hero-description { font-size: 14px; margin-bottom: 26px; }
+  .hero-world { min-height: 405px; }
+  .hero-monitor { top: 25%; left: 12%; width: 75%; height: 56%; }
+  .speech-bubble { right: 4%; top: 7%; font-size: 12px; }
+  .hero-down { font-size: 10px; }
+  .origin-section, .split-story-section { padding-block: 100px; }
+  .origin-layout { gap: 55px; }
+  .origin-comic-panel { padding: 23px; }
+  .origin-card-visual { height: 195px; }
+  .stats-row { gap: 10px; }
+  .stats-row small { font-size: 9px; }
+  .projects-section { padding-top: 95px; padding-bottom: 100px; }
+  .section-side-note { margin-top: 24px; }
+  .section-side-note p { font-size: 14px; }
+  .project-scroll-note { margin-top: 28px; font-size: 10px; }
+  .featured-project { width: min(360px, calc(100vw - 47px)); height: 555px; grid-template-rows: 183px 1fr; }
+  .featured-cover { padding: 18px 20px; }
+  .cover-shape-one { font-size: 140px; top: -10%; }
+  .cover-big-title { font-size: 38px; }
+  .featured-content { padding: 19px 19px 23px; }
+  .featured-content h3 { font-size: 29px; }
+  .featured-description { font-size: 13px; margin-bottom: 16px; }
+  .tag-list span { font-size: 10px; padding: 5px 9px; }
+  .archive-wrap { padding-top: 90px; }
+  .archive-card { min-height: 245px; }
+  .archive-card-main { padding: 19px; }
+  .archive-card p { font-size: 13px; }
+  .story-tile { padding: 25px; }
+  .story-tile-art { height: 220px; }
+  .subpage-hero { padding: 114px 0 67px; }
+  .subhero-layout { gap: 15px; }
+  .subpage-art { min-height: 240px; }
+  .sub-art-circle { width: 195px; font-size: 100px; box-shadow: 6px 7px 0 var(--ink); }
+  .sub-art-circle span { font-size: 23px; }
+  .work-section,.event-section { padding-top: 90px; padding-bottom: 95px; }
+  .work-section-top > p { font-size: 14px; }
+  .filter-row { padding: 28px 0 20px; }
+  .filter-pill { font-size: 11px; }
+  .experience-card { grid-template-columns: 34px minmax(0,1fr); gap: 16px; padding: 35px 0; }
+  .exp-index { font-size: 24px; }
+  .exp-meta { font-size: 10px; gap: 9px; }
+  .exp-main h3 { font-size: 28px; }
+  .exp-quote { font-size: 14px; }
+  .exp-main li { font-size: 13px; }
+  .event-grid { gap: 28px; }
+  .event-photo { height: 260px; }
+  .placeholder-art { font-size: 145px; }
+  .photo-placeholder strong { font-size: 30px; }
+  .event-body { padding: 23px; }
+  .event-body > p:not(.event-org) { font-size: 14px; }
+}

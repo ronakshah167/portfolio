@@ -14,7 +14,7 @@
     const nav = $('#site-header');
     if (nav) nav.innerHTML = `
       <header class="site-header"><nav class="shell nav-inner" aria-label="Main navigation">
-        <a href="index.html#top" class="brand" aria-label="Ronak Shah — home"><span class="brand-symbol">R<span>★</span></span><span>RONAK<span class="brand-dot">.</span><small>THE CREATIVE UNIVERSE</small></span></a>
+        <a href="index.html#top" class="brand" aria-label="Ronak Shah — home"><span class="brand-symbol">R</span><span>RONAK<span class="brand-dot">.</span></span></a>
         <div class="nav-links" id="nav-links">
           <a href="index.html#about" ${page==='home'?'class="is-current"':''}>ABOUT</a>
           <a href="index.html#projects">PROJECTS</a>
@@ -26,7 +26,7 @@
         <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
       </nav></header>`;
     const footer = $('#site-footer');
-    if (footer) footer.innerHTML = `<footer class="site-footer"><div class="shell footer-inner"><a href="index.html#top" class="footer-logo" aria-label="Back to top">R<span>★</span></a><div><strong>RONAK SHAH</strong><span>BUILDING THINGS WITH A LITTLE EXTRA PERSONALITY.</span></div><div class="footer-links"><a href="${escape(data.identity.github)}" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="${escape(data.identity.linkedin)}" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="mailto:${escape(data.identity.email)}">EMAIL ↗</a></div><span class="footer-copyright">© ${new Date().getFullYear()} / ALL IDEAS WELCOME</span></div></footer>`;
+    if (footer) footer.innerHTML = `<footer class="site-footer"><div class="shell footer-inner"><a href="index.html#top" class="footer-logo" aria-label="Back to top">R</a><div><strong>RONAK SHAH</strong></div><div class="footer-links"><a href="${escape(data.identity.github)}" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="${escape(data.identity.linkedin)}" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="mailto:${escape(data.identity.email)}">EMAIL ↗</a></div><span class="footer-copyright">© ${new Date().getFullYear()} / ALL IDEAS WELCOME</span></div></footer>`;
     const toggle = $('.menu-toggle'); const links = $('#nav-links');
     if (toggle && links) {
       const setMenu = (isOpen) => { links.classList.toggle('is-open', isOpen); toggle.setAttribute('aria-expanded', String(isOpen)); toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu'); document.body.classList.toggle('menu-open', isOpen); };
@@ -49,17 +49,16 @@
       stock: ['↗', '↗', '%'],
       lab: ['</>', '{ }', '↝'],
     }[project.id] || ['✳','⚡','★'];
-    return `<span class="cover-shape cover-shape-one">${escape(form[0])}</span><span class="cover-shape cover-shape-two">${escape(form[1])}</span><span class="cover-shape cover-shape-three">${escape(form[2])}</span>`;
+    return `<span class="cover-shape cover-shape-one">${escape(form[0])}</span>`;
   };
   function featuredCard(p) {
     return `<article class="featured-project accent-${escape(p.accent)}" id="project-${escape(p.id)}">
-      <div class="featured-project-top"><span>PROJECT FILE / ${escape(p.number)}</span><span>${escape(p.category)}</span></div>
-      <div class="featured-cover" aria-hidden="true"><div class="cover-rings"></div>${decor(p)}<span class="cover-big-title">${escape(p.title)}</span><span class="cover-stamp">${escape(p.stamp)}</span></div>
-      <div class="featured-content"><div class="project-number-line"><span>NO. ${escape(p.number)} — ${escape(p.year)}</span><span>THE BUILDS / VOL. 01</span></div><h3>${escape(p.title)}</h3><p class="featured-kicker">${escape(p.kicker)}</p><p class="featured-description">${escape(p.description)}</p><div class="tag-list">${p.stack.map(s=>`<span>${escape(s)}</span>`).join('')}</div><div class="featured-actions">${link(p.github,'VIEW CODE ↗','project-action')}${link(p.live,'LIVE DEMO ↗','project-action action-live')}${p.note?`<span class="project-private">${escape(p.note)}</span>`:''}</div></div>
+      <div class="featured-cover" aria-hidden="true">${decor(p)}<span class="cover-big-title">${escape(p.title)}</span></div>
+      <div class="featured-content"><div class="project-number-line"><span>${escape(p.category)} · ${escape(p.year)}</span></div><h3>${escape(p.title)}</h3><p class="featured-description">${escape(p.description)}</p><div class="tag-list">${p.stack.map(s=>`<span>${escape(s)}</span>`).join('')}</div><div class="featured-actions">${link(p.github,'VIEW CODE ↗','project-action')}${link(p.live,'LIVE DEMO ↗','project-action action-live')}${p.note?`<span class="project-private">${escape(p.note)}</span>`:''}</div></div>
     </article>`;
   }
   function archiveCard(p) {
-    return `<article class="archive-card accent-${escape(p.accent)} reveal"><div class="archive-card-art" aria-hidden="true">${decor(p)}<span class="archive-art-stamp">${escape(p.stamp)}</span></div><div class="archive-card-main"><div class="archive-card-eyebrow"><span>FILE ${escape(p.number)}</span><span>${escape(p.category)}</span></div><h4>${escape(p.title)}</h4><p>${escape(p.description)}</p><div class="tag-list">${p.stack.map(s=>`<span>${escape(s)}</span>`).join('')}</div><div class="archive-links">${link(p.github,'GITHUB ↗')}${link(p.live,'LIVE ↗')}</div></div></article>`;
+    return `<article class="archive-card accent-${escape(p.accent)} reveal"><div class="archive-card-art" aria-hidden="true">${decor(p)}</div><div class="archive-card-main"><div class="archive-card-eyebrow"><span>${escape(p.category)} · ${escape(p.year)}</span></div><h4>${escape(p.title)}</h4><p>${escape(p.description)}</p><div class="tag-list">${p.stack.map(s=>`<span>${escape(s)}</span>`).join('')}</div><div class="archive-links">${link(p.github,'GITHUB ↗')}${link(p.live,'LIVE ↗')}</div></div></article>`;
   }
   function initProjects() {
     const featureTrack = $('#project-track');
@@ -104,14 +103,14 @@
     const filters = $('#experience-filters');
     const render = (filter) => {
       const records = data.experience.filter(x => filter === 'all' || x.type === filter);
-      list.innerHTML = records.map(x => `<article class="experience-card reveal is-visible"><div class="exp-index">${escape(x.index)}<span>↘</span></div><div class="exp-main"><div class="exp-meta"><span>${escape(x.type.toUpperCase())}</span><span>${escape(x.date)}</span></div><h3>${escape(x.role)}</h3><h4>${escape(x.org)}</h4><p class="exp-quote">“${escape(x.summary)}”</p><ul>${x.details.map(d => `<li>${escape(d)}</li>`).join('')}</ul><div class="tag-list">${x.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div></div><div class="exp-side"><span class="exp-type-icon" aria-hidden="true">${x.type === 'industry' ? '↗' : x.type === 'leadership' ? '★' : '✳'}</span><span>RS / WORK FILE</span></div></article>`).join('');
+      list.innerHTML = records.map(x => `<article class="experience-card reveal is-visible"><div class="exp-index">${escape(x.index)}</div><div class="exp-main"><div class="exp-meta"><span>${escape(x.type.toUpperCase())}</span><span>${escape(x.date)}</span></div><h3>${escape(x.role)}</h3><h4>${escape(x.org)}</h4><p class="exp-quote">${escape(x.summary)}</p><ul>${x.details.map(d => `<li>${escape(d)}</li>`).join('')}</ul><div class="tag-list">${x.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div></div></article>`).join('');
     };
     render('all');
     if (filters) filters.addEventListener('click',(e)=>{ const btn=e.target.closest('button[data-filter]');if(!btn) return; $$('button',filters).forEach(b => { const active=b===btn;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active)); });render(btn.dataset.filter); });
   }
   function initEvents() {
     const grid = $('#event-grid'); if (!grid) return;
-    grid.innerHTML = data.events.map((event,i) => `<article class="event-card accent-${escape(event.accent)} reveal"><div class="event-photo" data-event="${escape(event.id)}"><div class="photo-placeholder"><span class="placeholder-micro">EVENT ARCHIVE / ${String(i+1).padStart(2,'0')}</span><span class="placeholder-art" aria-hidden="true">${['✳','✦','⚡','★','↗','❋'][i%6]}</span><strong>${escape(event.label)}</strong><span class="placeholder-upload">PHOTO GOES HERE <b>↗</b></span></div></div><div class="event-body"><div class="event-meta"><span>${escape(event.type)}</span><span>EVENT ${String(i+1).padStart(2,'0')}</span></div><h3>${escape(event.name)}</h3><p class="event-org">${escape(event.org)}</p><p>${escape(event.description)}</p><div class="event-role"><strong>MY PART</strong><span>${escape(event.role)}</span></div></div></article>`).join('');
+    grid.innerHTML = data.events.map((event,i) => `<article class="event-card accent-${escape(event.accent)} reveal"><div class="event-photo" data-event="${escape(event.id)}"><div class="photo-placeholder"><span class="placeholder-art" aria-hidden="true">${['✳','✦','⚡','★','↗','❋'][i%6]}</span><strong>${escape(event.label)}</strong></div></div><div class="event-body"><div class="event-meta"><span>${escape(event.type)}</span></div><h3>${escape(event.name)}</h3><p class="event-org">${escape(event.org)}</p><p>${escape(event.description)}</p><div class="event-role"><strong>MY PART</strong><span>${escape(event.role)}</span></div></div></article>`).join('');
     data.events.forEach(e=>{
       const frame = $(`[data-event="${e.id}"]`,grid);
       if (!frame) return;
