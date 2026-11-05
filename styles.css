@@ -589,3 +589,39 @@ html[data-intro="on"] body { overflow: hidden; }
 .achievement-proof img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 36%}
 @media(max-width:900px){.event-era .event-grid{gap:24px}.event-era-heading h3{font-size:clamp(31px,5vw,52px)}}
 @media(max-width:650px){.event-jump-links{gap:9px;margin:0 0 50px}.event-jump-links a{font-size:10px;padding:10px 12px}.event-era+.event-era{margin-top:80px}.event-era-heading{display:block;margin-bottom:28px}.event-era-count{display:inline-block;margin-top:18px}.event-era-heading h3{font-size:clamp(32px,8vw,48px)}.event-era .event-grid{grid-template-columns:1fr;gap:28px}.event-era .event-photo{height:270px}.event-era .event-body{padding:23px}.achievements-grid{grid-template-columns:1fr}.achievement-proof{height:235px}}
+
+
+/* Dark-mode controls: keep every pill, capsule and event navigation readable. */
+:root[data-theme="dark"] .filter-pill,
+:root[data-theme="dark"] .event-jump-links a {
+  background: #242a39;
+  color: #f6f5fa;
+  border-color: #b8bdda;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.1);
+}
+:root[data-theme="dark"] .filter-pill:hover,
+:root[data-theme="dark"] .event-jump-links a:hover {
+  background: #3a4359;
+  color: #ffffff;
+  border-color: #edf0ff;
+}
+:root[data-theme="dark"] .filter-pill.is-active {
+  background: #e7ffa0;
+  color: #16171e;
+  border-color: #e7ffa0;
+  box-shadow: 0 0 0 2px rgba(231,255,160,.18);
+}
+:root[data-theme="dark"] .event-jump-links a span { color: inherit; }
+:root[data-theme="dark"] .event-era-count { background:#e7ffa0; color:#17181e; }
+:root[data-theme="dark"] .exp-main .tag-list > span,
+:root[data-theme="dark"] .featured-content .tag-list > span,
+:root[data-theme="dark"] .archive-card .tag-list > span {
+  background:#323d54;
+  border-color:#66738d;
+  color:#fff;
+}
+:root[data-theme="dark"] .filter-pill:focus-visible,
+:root[data-theme="dark"] .event-jump-links a:focus-visible {
+  outline:3px solid #e7ffa0;
+  outline-offset:3px;
+}
