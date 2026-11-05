@@ -224,11 +224,16 @@
     data.events.forEach(event => {
       const frame = archive.querySelector(`[data-event="${event.id}"]`);
       if (!frame || !event.image) return;
-      const img = new Image(); img.alt = `${event.name} — event photograph`;
-      img.loading = 'lazy'; img.decoding = 'async';
-      img.addEventListener('load', () => { frame.append(img); frame.classList.add('has-photo'); });
-      img.addEventListener('error', () => { frame.classList.add('missing-photo'); });
+      // A detached lazy-loaded image may never start downloading. Attach it first,
+      // then switch from the comic placeholder after a successful load.
+      const img = new Image();
+      img.alt = `${event.name} — event photograph`;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.addEventListener('load', () => { frame.classList.add('has-photo'); });
+      img.addEventListener('error', () => { img.remove(); frame.classList.add('missing-photo'); });
       if (event.position) img.style.objectPosition = event.position;
+      frame.append(img);
       img.src = event.image;
     });
   }
