@@ -35,24 +35,14 @@ window.PORTFOLIO_DATA = {
   // Verified from the uploaded resume. Add further results and links here when confirmed.
   achievements: [
     {
-      id: 'case-quest',
-      category: 'FINANCE / CASE CHALLENGE',
-      title: 'Case Quest',
-      result: 'WINNING TEAM',
-      symbol: '★',
-      accent: 'orange',
-      image: 'assets/events/case-quest.webp',
-      description: 'Celebrated a Case Quest victory with the team, turning case-solving into a winning outcome.'
-    },
-
-    {
       id: 'finance-case-study',
       category: 'FINANCE / CASE STUDY',
       title: 'Finance Domain Case Study',
       result: '1ST PLACE',
+      image: 'assets/events/case-quest.webp',
       symbol: '01',
       accent: 'lime',
-      description: 'Secured first place in a finance-focused case study competition.'
+      description: 'Secured first place in a finance-focused case study competition. The team photograph from Case Quest belongs to this case-study feature.'
     },
     {
       id: 'the-big-short',
@@ -87,6 +77,5 @@ window.PORTFOLIO_DATA = {
     {"id":"dough-and-demo","era":"third","name":"DOUGH & DEMO","type":"Campus Community Event","org":"CSI KJSSE · ChatGPT-focused collaboration","role":"Event organization · partner coordination","description":"Helped organize Dough & Demo, where every participant received complimentary ChatGPT Plus access.","accent":"lime","image":"assets/events/dough-and-demo.webp","position":"50% 39%","label":"DOUGH. DEMO. IDEAS."},
     {"id":"ibm-workshop","era":"third","name":"IBM WORKSHOP","type":"Department Workshop","org":"Communications Department · IBM","role":"Workshop organization & logistics","description":"Helped organize an IBM workshop exclusively for the Communications (Comms) department.","accent":"blue","image":"assets/events/ibm-workshop.jpg","label":"INDUSTRY INSIGHTS"},
     {"id":"7weekscp","era":"third","name":"7 WEEKS OF CP","type":"Online Competitive Programming Series","org":"KJSCE ACM Student Chapter","role":"PR · campaign promotion · poster design","description":"Managed public relations and designed the event poster for an online initiative helping students learn and practice competitive programming.","accent":"orange","image":"assets/events/7-weeks-of-cp.jpg","label":"7 WEEKS. KEEP CODING."},
-    {"id":"case-quest","era":"highlight","name":"CASE QUEST · WINNING MOMENT","type":"Competition Victory","org":"Case Quest","role":"Winning team · participant","description":"A team photo celebrating a Case Quest competition win. Included here as an achievement highlight, not an event-organizing credit.","accent":"violet","image":"assets/events/case-quest.webp","position":"50% 38%","label":"CASE QUEST WIN"}
   ]
 };
