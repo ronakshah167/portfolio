@@ -132,7 +132,7 @@
     grid.innerHTML = data.achievements.map((award, i) => `
       <article class="achievement-card accent-${escape(award.accent)} reveal">
         <div class="achievement-card-meta"><span>${escape(award.category)}</span><span>0${i+1} / 0${data.achievements.length}</span></div>
-        <div class="achievement-emblem" aria-hidden="true"><span>${escape(award.symbol)}</span></div>
+        ${award.image ? `<div class="achievement-proof"><img src="${escape(award.image)}" alt="${escape(award.title)} team photo" loading="lazy" decoding="async" /></div>` : `<div class="achievement-emblem" aria-hidden="true"><span>${escape(award.symbol)}</span></div>`}
         <div class="achievement-card-content"><span class="achievement-result">${escape(award.result)}</span><h3>${escape(award.title)}</h3><p>${escape(award.description)}</p></div>
       </article>`).join('');
   }
@@ -210,16 +210,30 @@
     if (filters) filters.addEventListener('click',(e)=>{ const btn=e.target.closest('button[data-filter]');if(!btn) return; $$('button',filters).forEach(b => { const active=b===btn;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active)); });render(btn.dataset.filter); });
   }
   function initEvents() {
-    const grid = $('#event-grid'); if (!grid) return;
-    grid.innerHTML = data.events.map((event,i) => `<article class="event-card accent-${escape(event.accent)} reveal"><div class="event-photo" data-event="${escape(event.id)}"><div class="photo-placeholder"><span class="placeholder-art" aria-hidden="true">${['✳','✦','⚡','★','↗','❋'][i%6]}</span><strong>${escape(event.label)}</strong></div></div><div class="event-body"><div class="event-meta"><span>${escape(event.type)}</span></div><h3>${escape(event.name)}</h3><p class="event-org">${escape(event.org)}</p><p>${escape(event.description)}</p><div class="event-role"><strong>MY PART</strong><span>${escape(event.role)}</span></div></div></article>`).join('');
-    data.events.forEach(e=>{
-      const frame = $(`[data-event="${e.id}"]`,grid);
-      if (!frame) return;
-      const img = new Image(); img.alt = `${e.name} event photo`; img.loading='lazy'; img.decoding='async';
-      img.addEventListener('load',() => { frame.append(img);frame.classList.add('has-photo'); });
-      img.src = e.image;
+    const archive = $('#event-grid'); if (!archive) return;
+    const groupInfo = [
+      { id: 'second', label: 'SECOND YEAR', chapter: 'CHAPTER 01', heading: 'WHERE IT STARTED', subtext: 'ACM marketing, Illuminati PR and the first big campus moments.' },
+      { id: 'third', label: 'THIRD YEAR', chapter: 'CHAPTER 02', heading: 'LEVELING UP', subtext: 'Buildathons, workshops, sponsorships and leading initiatives.' },
+      { id: 'highlight', label: 'COMPETITION SPOTLIGHT', chapter: 'BONUS FRAME', heading: 'THE WINNING FRAME', subtext: 'A competition win, included separately from events I helped organize.' }
+    ];
+    const renderCard = (event, i) => `<article class="event-card accent-${escape(event.accent)} reveal" id="event-${escape(event.id)}"><div class="event-photo" data-event="${escape(event.id)}"><div class="photo-placeholder"><span class="placeholder-art" aria-hidden="true">${['✳','✦','⚡','★','↗','❋'][i%6]}</span><strong>${escape(event.label)}</strong></div></div><div class="event-body"><div class="event-meta"><span>${escape(event.type)}</span></div><h3>${escape(event.name)}</h3><p class="event-org">${escape(event.org)}</p><p>${escape(event.description)}</p><div class="event-role"><strong>MY PART</strong><span>${escape(event.role)}</span></div></div></article>`;
+    archive.innerHTML = groupInfo.map(group => {
+      const records = data.events.filter(e => e.era === group.id);
+      if (!records.length) return '';
+      return `<section class="event-era" id="${group.id}-events" aria-labelledby="${group.id}-title"><div class="event-era-heading"><div><span class="event-era-kicker">${escape(group.chapter)} / ${escape(group.label)}</span><h3 id="${group.id}-title">${escape(group.heading)}</h3><p>${escape(group.subtext)}</p></div><span class="event-era-count">${records.length} ${group.id==='highlight'?'WIN':'EVENTS'}</span></div><div class="event-grid">${records.map(renderCard).join('')}</div></section>`;
+    }).join('');
+    data.events.forEach(event => {
+      const frame = archive.querySelector(`[data-event="${event.id}"]`);
+      if (!frame || !event.image) return;
+      const img = new Image(); img.alt = `${event.name} — event photograph`;
+      img.loading = 'lazy'; img.decoding = 'async';
+      img.addEventListener('load', () => { frame.append(img); frame.classList.add('has-photo'); });
+      img.addEventListener('error', () => { frame.classList.add('missing-photo'); });
+      if (event.position) img.style.objectPosition = event.position;
+      img.src = event.image;
     });
   }
+
   function initReveals() {
     const elements = $$('.reveal');
     if (!('IntersectionObserver' in window) || reducedMotion.matches) { elements.forEach(x=>x.classList.add('is-visible')); return; }

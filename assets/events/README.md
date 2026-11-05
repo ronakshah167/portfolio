@@ -1,17 +1,16 @@
-# Event photo slots
+# Event archive photo mapping
 
-Put your event photos in this folder. The website automatically shows a real photo
-instead of the comic placeholder when the matching file exists.
+All six photos below were provided by the portfolio owner, and saved as **pixel-identical lossless WebP** copies of the source images. Nothing was reimagined or face-retouched.
 
-Use exactly these filenames, or edit `image` for the event inside `data.js`:
+| Event / highlight | Website asset | Original upload |
+| --- | --- | --- |
+| Dough & Demo | `dough-and-demo.webp` | `image(20261105-124034).png` |
+| Artemis | `artemis.webp` | `image(20261105-124110).png` |
+| Beyond the Classroom (BTC) | `beyond-the-classroom.webp` | `image(20261105-124128).png` |
+| Council Handover | `council-handover.webp` | `image(20261105-124148).png` |
+| RTP 5.0 / Road to Programming | `rtp-5.webp` | `image(20261105-124203).png` |
+| Case Quest win | `case-quest.webp` | `image(20261105-124500).png` |
 
-- `renaissance.jpg`
-- `illuminati.jpg`
-- `aftermath.jpg`
-- `artemis.jpg`
-- `beyond-the-classroom.jpg`
-- `7-weeks-of-cp.jpg`
+**Missing photos:** Aftermath (`aftermath.jpg`), Quill Quest (`quill-quest.jpg`), Trivia Night (`trivia-night.jpg`), Gemini Hackday 2.0 (`gemini-hackday.jpg`), Renaissance (`renaissance.jpg`), Hermes AI Agent Workshop (`hermes-workshop.jpg`), IBM Workshop (`ibm-workshop.jpg`), and 7 Weeks of CP (`7-weeks-of-cp.jpg`). These cards show comic placeholders until matching photos are added.
 
-Best results: landscape 16:9 or 4:3 JPEGs, at least 1400px wide.
-Photos are displayed with `object-fit: cover` so crop the subject toward the center.
-For PNG/WebP files, change the corresponding extension in `data.js`.
+Edit entries and relative image paths in `data.js`. Each card preserves image proportions with CSS `object-fit: cover` for the allocated card frame; the source image bytes are unchanged.
