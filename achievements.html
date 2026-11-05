@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4eedf" />
+  <meta name="description" content="Explore Ronak Shah's achievements in finance case studies, quantitative trading, and climate hackathons." />
+  <meta property="og:title" content="Achievements — Ronak Shah" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      try {
+        const chosen = localStorage.getItem('ronak-portfolio-theme');
+        const theme = chosen === 'dark' || chosen === 'light' ? chosen
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch (_) { document.documentElement.dataset.theme = 'light'; }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="data.js" defer></script>
+  <script src="script.js" defer></script>
+  <title>Achievements — Ronak Shah</title>
+</head>
+<body data-page="achievements">
+  <div id="site-header"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="page-grain" aria-hidden="true"></div>
+  <main id="main-content">
+    <section class="subpage-hero achievements-hero" aria-labelledby="achievement-title">
+      <div class="shell">
+        <a class="page-back" data-back href="index.html"><span aria-hidden="true">←</span> BACK TO PORTFOLIO</a>
+        <div class="chapter-label"><span class="number-block">04</span><span>THE HIGHLIGHT REEL / ISSUE 004</span></div>
+        <div class="subhero-layout">
+          <div><span class="handwritten">the milestones along the way</span><h1 class="subpage-title" id="achievement-title">PROOF<br /><span>OF THE</span><br />WORK<span class="accent-punct">.</span></h1><p class="subpage-desc">A few moments when late nights, ambitious ideas, and great teams turned into something worth celebrating.</p></div>
+          <div class="subpage-art achievement-art" aria-hidden="true"><div class="achievement-hero-medal"><div class="medal-ribbon"></div><div class="medal-face"><span>★</span><small>LEVEL UP</small></div></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="achievements-section shell" aria-labelledby="awards-title">
+      <div class="achievements-heading reveal"><span class="mini-kicker">THE MILESTONES</span><h2 id="awards-title" class="display-head">A FEW <em>BIG WINS.</em></h2><p>From finance and trading to climate tech. Each win is another reason to keep building.</p></div>
+      <div class="achievements-grid" id="achievements-grid"></div>
+      <div class="achievements-bottom reveal"><span class="handwritten">more chapters are being written...</span><a class="text-link" href="index.html#projects">SEE THE PROJECTS <span aria-hidden="true">↗</span></a></div>
+    </section>
+    <section class="next-page-banner achievement-next"><div class="shell"><div><span>BACK TO THE UNIVERSE</span><h2>WHAT'S <em>NEXT?</em></h2></div><a class="comic-button button-ink" href="index.html#top">BACK TO HOME ↗</a></div></section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

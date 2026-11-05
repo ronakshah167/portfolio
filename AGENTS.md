@@ -1,17 +1,11 @@
-# Portfolio contributor / Codex brief
+# Ronak Shah portfolio project
 
-This is Ronak Shah's comic-book portfolio. Edit, test and improve it as a static site; no npm setup or API key is required.
-
-## Non-negotiable
-- Preserve the bold ink outlines, lime/violet/coral comic palette, halftone texture and editorial hierarchy.
-- Preserve the sticky desktop project gallery and mobile swipe fallback.
-- Respect `prefers-reduced-motion`, semantic HTML, focus visibility, and mobile keyboard navigation.
-- Keep content editable via `data.js`, without hardcoding projects/roles/events in multiple places.
-- Event photos are intentionally placeholders. Images in `assets/events/` named in its README should automatically replace them.
-- Do not invent employment facts or dates; `DATE TO CONFIRM` is intentional.
-- Do not expose private GitHub repository URLs or secrets in the public site.
-
-## Verification
-- `node --check data.js && node --check script.js`
-- Serve with `python3 -m http.server 8000` and test index, work, and events pages at desktop and mobile widths.
-- Validate the experience filter (9 total, 4 industry) and 5 featured + 5 archived projects.
+- This is a static HTML/CSS/JavaScript portfolio. No build tooling or dependencies required.
+- `index.html` owns the cinematic entry overlay and main portfolio.
+- `achievements.html`, `work.html`, and `events.html` are separate pages. Use the shared header/footer from `script.js`.
+- `data.js` holds project/experience/achievement/event content; do not fabricate credentials or dates.
+- `styles.css` includes reduced-motion support and persistent light/dark theme styling.
+- `assets/intro/ronak-wordmark.webp` is the photo-filled RONAK title for the entry animation. Keep the title readable and the Enter/Skip controls keyboard accessible.
+- Intro should appear once per session on landing `index.html`; `?intro=replay` deliberately replays it. Respect `prefers-reduced-motion`.
+- Preserve existing project links and event image paths; visitors can replace image files under `assets/events/`.
+- Verify desktop/mobile layout and JS syntax before deploying.

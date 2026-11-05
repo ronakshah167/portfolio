@@ -4,19 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f4eedf" />
-  <meta name="description" content="The creative universe of Ronak Shah — developer, data explorer, finance thinker and community builder. Discover projects, experience and events." />
+  <meta name="description" content="The creative universe of Ronak Shah — developer, data explorer, finance thinker and community builder. Discover projects, achievements, experience and events." />
   <meta property="og:title" content="Ronak Shah — The Creative Universe" />
   <meta property="og:description" content="Code. Create. Repeat. A playful, interactive portfolio." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet" />
+  <script>
+    (() => {
+      try {
+        const chosen = localStorage.getItem('ronak-portfolio-theme');
+        const theme = chosen === 'dark' || chosen === 'light' ? chosen
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch (_) { document.documentElement.dataset.theme = 'light'; }
+    })();
+  </script>
+  <script>
+    /* Render the cinematic opening before CSS/JS, without a flash of the homepage. */
+    (() => {
+      let shown = false;
+      try { shown = sessionStorage.getItem('ronak-intro-complete') === '1'; } catch (_) {}
+      const replay = new URLSearchParams(location.search).get('intro') === 'replay';
+      document.documentElement.dataset.intro = (!shown || replay) ? 'on' : 'off';
+    })();
+  </script>
+  <noscript><style>.cinema-intro{display:none!important}</style></noscript>
   <link rel="stylesheet" href="styles.css" />
   <script src="data.js" defer></script>
   <script src="script.js" defer></script>
   <title>Ronak Shah — The Creative Universe</title>
 </head>
 <body data-page="home">
+  <section class="cinema-intro" id="cinema-intro" aria-label="Cinematic introduction to Ronak Shah's portfolio" role="dialog" aria-modal="true">
+    <div class="cinema-noise" aria-hidden="true"></div>
+    <div class="cinema-flash-panels" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="cinema-top-bar">
+      <span class="cinema-brand"><strong>R<span>S</span></strong> / ORIGINAL STORY</span>
+      <a href="#top" id="cinema-skip" class="cinema-skip">SKIP INTRO <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="cinema-stage">
+      <p class="cinema-eyebrow">THE NEXT CHAPTER BEGINS</p>
+      <div class="cinema-wordmark-window">
+        <span class="cinema-bloom" aria-hidden="true"></span>
+        <img class="cinema-wordmark" src="assets/intro/ronak-wordmark.webp" alt="RONAK — cinematic collage of personal moments" width="1672" height="453" fetchpriority="high" decoding="async" />
+        <span class="cinema-light-sweep" aria-hidden="true"></span>
+      </div>
+      <h2 class="cinema-tagline">NOT JUST A NAME. <span>A WHOLE UNIVERSE.</span></h2>
+      <p class="cinema-byline">DEVELOPER <span>·</span> CREATOR <span>·</span> STORYTELLER</p>
+      <a href="#top" id="cinema-enter" class="cinema-enter">ENTER MY UNIVERSE <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="cinema-bottom-bar"><span>RONAK SHAH / PORTFOLIO</span><span class="cinema-time">THE STORY STARTS HERE</span></div>
+    <div class="cinema-progress" aria-hidden="true"><span></span></div>
+  </section>
   <div id="site-header"></div>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
   <div class="page-grain" aria-hidden="true"></div>
@@ -97,10 +139,11 @@
       <div class="split-story-grid">
         <a class="story-tile story-work reveal" href="work.html"><div class="story-tile-art art-work" aria-hidden="true"><span class="big-art-word">WORK!</span></div><h3>FROM MARKETS<br />TO MAKING.</h3><p>Industry internships, finance, marketing, brand activations, and everything in between.</p><span class="story-link">VIEW WORK & EXPERIENCE <b>→</b></span></a>
         <a class="story-tile story-events reveal" href="events.html"><div class="story-tile-art art-events" aria-hidden="true"><span class="big-art-word">WOW!</span></div><h3>THE MAGIC<br />OFF-SCREEN.</h3><p>Organizing buildathons, driving campaigns, and bringing real-world experiences to life.</p><span class="story-link">EXPLORE THE EVENTS <b>→</b></span></a>
+        <a class="story-tile story-achievements reveal" href="achievements.html"><div class="story-tile-art art-achievements" aria-hidden="true"><span class="big-art-word">WIN!</span></div><div class="story-achievements-copy"><h3>LET THE RESULTS<br />DO THE TALKING.</h3><p>Finance, quantitative trading and climate innovation — a few moments worth celebrating.</p><span class="story-link">VIEW ACHIEVEMENTS <b>→</b></span></div></a>
       </div>
     </div></section>
 
-    <section id="contact" class="contact-section"><div class="shell contact-inner reveal"><span class="chapter-label light-label"><span class="number-block">04</span><span>THE NEXT CHAPTER</span></span><h2>GOT AN IDEA?<br /><em>LET'S MAKE</em><br />SOME NOISE<span>.</span></h2><p>Cool project, interesting opportunity, chaotic good idea? My inbox is open.</p><a class="contact-email" href="mailto:ronak.ps@somaiya.edu">RONAK.PS@SOMAIYA.EDU <span>↗</span></a><div class="contact-links"><a href="https://github.com/ronakshah167" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/ronak-shah-570823329" target="_blank" rel="noreferrer">LINKEDIN ↗</a><a href="Ronak_s_Resume.pdf" target="_blank" rel="noreferrer">RESUME ↗</a></div></div></section>
+    <section id="contact" class="contact-section"><div class="shell contact-inner reveal"><span class="chapter-label light-label"><span class="number-block">05</span><span>THE NEXT CHAPTER</span></span><h2>GOT AN IDEA?<br /><em>LET'S MAKE</em><br />SOME NOISE<span>.</span></h2><p>Cool project, interesting opportunity, chaotic good idea? My inbox is open.</p><a class="contact-email" href="mailto:ronak.ps@somaiya.edu">RONAK.PS@SOMAIYA.EDU <span>↗</span></a><div class="contact-links"><a href="https://github.com/ronakshah167" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.linkedin.com/in/ronak-shah-570823329" target="_blank" rel="noreferrer">LINKEDIN ↗</a><a href="Ronak_s_Resume.pdf" target="_blank" rel="noreferrer">RESUME ↗</a></div></div></section>
   </main>
   <div id="site-footer"></div>
 </body>

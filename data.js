@@ -31,6 +31,37 @@ window.PORTFOLIO_DATA = {
     {role:'Experience · Details Pending',org:'Corizo Edutech',date:'DATE TO CONFIRM',type:'industry',index:'08',summary:'A chapter still being filled in.',details:['Role, responsibilities, and outcomes to be confirmed.'],tags:['Details to add']},
     {role:'Freelance Work',org:'Independent',date:'DATE TO CONFIRM',type:'industry',index:'09',summary:'Built outside the usual brief.',details:['Client names, deliverables, and links can be added here once confirmed.'],tags:['Independent Work','Details to add']}
   ],
+
+  // Verified from the uploaded resume. Add further results and links here when confirmed.
+  achievements: [
+    {
+      id: 'finance-case-study',
+      category: 'FINANCE / CASE STUDY',
+      title: 'Finance Domain Case Study',
+      result: '1ST PLACE',
+      symbol: '01',
+      accent: 'lime',
+      description: 'Secured first place in a finance-focused case study competition.'
+    },
+    {
+      id: 'the-big-short',
+      category: 'QUANTITATIVE TRADING',
+      title: 'The Big Short',
+      result: '3RD PLACE',
+      symbol: '03',
+      accent: 'violet',
+      description: 'Placed third in a quantitative trading event focused on machine learning.'
+    },
+    {
+      id: 'climate-hack',
+      category: 'CLIMATE / HACKATHON',
+      title: 'Climate Hack',
+      result: 'HACKATHON WINNER',
+      symbol: '★',
+      accent: 'blue',
+      description: 'Won a climate-focused hackathon.'
+    }
+  ],
   events: [
     {id:'renaissance',name:'RENAISSANCE',type:'Buildathon',org:'CSI KJSSE · Abhyantriki',role:'Organizing team / finance & outreach',description:'A buildathon built around bold ideas, problem-solving, and making projects under pressure. Contributed to organizing and partner outreach.',accent:'lime',image:'assets/events/renaissance.jpg',label:'IDEAS, REBORN'},
     {id:'illuminati',name:'ILLUMINATI',type:'Tech Event',org:'Campus event',role:'PR Head',description:'A technical event driven by student creativity and ambitious execution. Led PR and outreach to help give the experience its audience.',accent:'pink',image:'assets/events/illuminati.jpg',label:'LIGHT IT UP'},

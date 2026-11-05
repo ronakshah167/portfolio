@@ -10,6 +10,49 @@
   const escape = (text) => String(text == null ? '' : text).replace(/[&<>"']/g, (s) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[s]);
   const link = (url, label, className = '') => url ? `<a href="${escape(url)}" class="${className}" target="_blank" rel="noopener noreferrer">${label}</a>` : '';
 
+  function initCinematicIntro() {
+    const intro = $('#cinema-intro');
+    if (!intro) return;
+    const root = document.documentElement;
+    if (root.dataset.intro !== 'on') { intro.hidden = true; return; }
+
+    let closing = false;
+    const enter = $('#cinema-enter');
+    const skip = $('#cinema-skip');
+    if (reducedMotion.matches) intro.classList.add('cinema-ready');
+    else window.setTimeout(() => intro.classList.add('cinema-ready'), 3100);
+
+    const close = (event) => {
+      event?.preventDefault();
+      if (closing) return;
+      closing = true;
+      try { sessionStorage.setItem('ronak-intro-complete', '1'); } catch (_) {}
+      intro.classList.add('is-exiting');
+      const finish = () => {
+        root.dataset.intro = 'off';
+        intro.hidden = true;
+        const target = $('#main-content');
+        if (target) { target.setAttribute('tabindex','-1'); target.focus({preventScroll: true}); }
+        // Rerender pinned horizontal projects after unlocking document scroll.
+        window.dispatchEvent(new Event('resize'));
+      };
+      if (reducedMotion.matches) finish(); else window.setTimeout(finish, 590);
+    };
+    skip?.addEventListener('click', close);
+    enter?.addEventListener('click', close);
+    intro.addEventListener('keydown', e => { if (e.key === 'Escape') close(e); });
+
+    // Keep keyboard users inside the intro until they choose Skip or Enter.
+    intro.addEventListener('keydown', e => {
+      if (e.key !== 'Tab') return;
+      const focusable = [skip,enter].filter(Boolean).filter(el => getComputedStyle(el).visibility !== 'hidden');
+      if (!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  }
+
   function initChrome() {
     const nav = $('#site-header');
     if (nav) nav.innerHTML = `
@@ -20,13 +63,17 @@
           <a href="index.html#projects">PROJECTS</a>
           <a href="work.html" ${page==='work'?'class="is-current"':''}>WORK</a>
           <a href="events.html" ${page==='events'?'class="is-current"':''}>EVENTS</a>
+          <a href="achievements.html" ${page==='achievements'?'class="is-current"':''}>WINS</a>
           <a href="index.html#contact">CONTACT</a>
           <a href="${escape(data.identity.resume)}" class="nav-resume" target="_blank" rel="noopener noreferrer">RESUME ↗</a>
         </div>
-        <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
+        <div class="nav-actions">
+          <button class="theme-toggle" type="button" aria-label="Switch to dark theme" title="Switch theme" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-toggle-text">DARK</span></button>
+          <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="nav-links" aria-expanded="false"><span></span><span></span><span></span></button>
+        </div>
       </nav></header>`;
     const footer = $('#site-footer');
-    if (footer) footer.innerHTML = `<footer class="site-footer"><div class="shell footer-inner"><a href="index.html#top" class="footer-logo" aria-label="Back to top">R</a><div><strong>RONAK SHAH</strong></div><div class="footer-links"><a href="${escape(data.identity.github)}" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="${escape(data.identity.linkedin)}" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="mailto:${escape(data.identity.email)}">EMAIL ↗</a></div><span class="footer-copyright">© ${new Date().getFullYear()} / ALL IDEAS WELCOME</span></div></footer>`;
+    if (footer) footer.innerHTML = `<footer class="site-footer"><div class="shell footer-inner"><a href="index.html#top" class="footer-logo" aria-label="Back to top">R</a><div><strong>RONAK SHAH</strong></div><div class="footer-links"><a href="index.html?intro=replay" class="replay-intro-link">REPLAY INTRO ↺</a><a href="${escape(data.identity.github)}" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="${escape(data.identity.linkedin)}" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="mailto:${escape(data.identity.email)}">EMAIL ↗</a></div><span class="footer-copyright">© ${new Date().getFullYear()} / ALL IDEAS WELCOME</span></div></footer>`;
     const toggle = $('.menu-toggle'); const links = $('#nav-links');
     if (toggle && links) {
       const setMenu = (isOpen) => { links.classList.toggle('is-open', isOpen); toggle.setAttribute('aria-expanded', String(isOpen)); toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu'); document.body.classList.toggle('menu-open', isOpen); };
@@ -34,6 +81,60 @@
       $$('a', links).forEach(a => a.addEventListener('click', () => setMenu(false)));
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
     }
+  }
+
+
+  function initThemeAndBack() {
+    const root = document.documentElement;
+    const toggle = $('.theme-toggle');
+    const metaTheme = $('meta[name="theme-color"]');
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const selected = () => root.dataset.theme === 'dark' ? 'dark' : 'light';
+    const render = (theme) => {
+      root.dataset.theme = theme;
+      root.style.colorScheme = theme;
+      if (metaTheme) metaTheme.setAttribute('content', theme === 'dark' ? '#11131b' : '#f4eedf');
+      if (toggle) {
+        const next = theme === 'dark' ? 'light' : 'dark';
+        toggle.setAttribute('aria-label', `Switch to ${next} theme`);
+        toggle.setAttribute('title', `Switch to ${next} theme`);
+        toggle.setAttribute('aria-pressed', String(theme === 'dark'));
+        $('.theme-icon', toggle).textContent = theme === 'dark' ? '☀' : '☾';
+        $('.theme-toggle-text', toggle).textContent = next.toUpperCase();
+      }
+    };
+    render(selected());
+    toggle?.addEventListener('click', () => {
+      const next = selected() === 'dark' ? 'light' : 'dark';
+      render(next);
+      try { localStorage.setItem('ronak-portfolio-theme', next); } catch (_) {}
+    });
+    media.addEventListener?.('change', e => {
+      try { if (!localStorage.getItem('ronak-portfolio-theme')) render(e.matches ? 'dark' : 'light'); } catch (_) {}
+    });
+    // Direct visits return to home; visits from another portfolio page return to their actual origin.
+    $$('[data-back]').forEach(back => back.addEventListener('click', event => {
+      try {
+        if (!document.referrer || window.history.length < 2) return;
+        const previous = new URL(document.referrer);
+        const allowed = ['','index.html','work.html','events.html','achievements.html'];
+        if (previous.origin !== window.location.origin || previous.pathname === window.location.pathname) return;
+        if (!allowed.includes(previous.pathname.split('/').pop())) return;
+        event.preventDefault();
+        window.history.back();
+      } catch (_) { /* Use the regular home link instead. */ }
+    }));
+  }
+
+  function initAchievements() {
+    const grid = $('#achievements-grid');
+    if (!grid || !Array.isArray(data.achievements)) return;
+    grid.innerHTML = data.achievements.map((award, i) => `
+      <article class="achievement-card accent-${escape(award.accent)} reveal">
+        <div class="achievement-card-meta"><span>${escape(award.category)}</span><span>0${i+1} / 0${data.achievements.length}</span></div>
+        <div class="achievement-emblem" aria-hidden="true"><span>${escape(award.symbol)}</span></div>
+        <div class="achievement-card-content"><span class="achievement-result">${escape(award.result)}</span><h3>${escape(award.title)}</h3><p>${escape(award.description)}</p></div>
+      </article>`).join('');
   }
 
   const decor = (project) => {
@@ -149,5 +250,5 @@
       });
     }
   }
-  initChrome(); initProjects(); initExperience(); initEvents(); initReveals(); initMotion();
+  initChrome(); initCinematicIntro(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initReveals(); initMotion();
 })();
