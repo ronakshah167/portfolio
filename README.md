@@ -2,16 +2,6 @@
 
 A comic-book-inspired, multi-page developer portfolio with a kinetic hero, sticky scroll storytelling, project gallery, career timeline, and event photo slots.
 
-## Start locally
-
-No npm install or build step is necessary. From this directory run:
-
-```bash
-python3 -m http.server 8000
-```
-
-Open http://localhost:8000 . You can also open `index.html` directly; a local server is recommended for consistent behavior.
-
 ## Pages
 
 - `index.html`: Intro, origin story, featured projects, archive and contact.
