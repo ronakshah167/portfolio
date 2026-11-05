@@ -63,3 +63,6 @@ The project can be opened with Codex or your preferred editor. All content is in
 - The title artwork is located at `assets/intro/ronak-wordmark.webp`, composed from supplied photo references, with a real HTML Enter button for accessibility.
 - `prefers-reduced-motion` bypasses animation; theme light/dark persists independently.
 - To change the montage, replace the WebP (1672×453 recommended) and keep its file path.
+### Original-photo cinematic intro
+
+`index.html` uses `assets/intro/ronak-original-paris-20261105.webp` with a unique filename to avoid stale Vercel/CDN/browser caches. The photo in the red sweater is composited from the original uploaded photograph at uniform scale; no facial retouching or generated facial features are used.
