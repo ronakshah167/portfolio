@@ -213,8 +213,7 @@
     const archive = $('#event-grid'); if (!archive) return;
     const groupInfo = [
       { id: 'second', label: 'SECOND YEAR', chapter: 'CHAPTER 01', heading: 'WHERE IT STARTED', subtext: 'ACM marketing, Illuminati PR and the first big campus moments.' },
-      { id: 'third', label: 'THIRD YEAR', chapter: 'CHAPTER 02', heading: 'LEVELING UP', subtext: 'Buildathons, workshops, sponsorships and leading initiatives.' },
-      { id: 'highlight', label: 'COMPETITION SPOTLIGHT', chapter: 'BONUS FRAME', heading: 'THE WINNING FRAME', subtext: 'A competition win, included separately from events I helped organize.' }
+      { id: 'third', label: 'THIRD YEAR', chapter: 'CHAPTER 02', heading: 'LEVELING UP', subtext: 'Buildathons, workshops, sponsorships and leading initiatives.' }
     ];
     const renderCard = (event, i) => `<article class="event-card accent-${escape(event.accent)} reveal" id="event-${escape(event.id)}"><div class="event-photo" data-event="${escape(event.id)}"><div class="photo-placeholder"><span class="placeholder-art" aria-hidden="true">${['✳','✦','⚡','★','↗','❋'][i%6]}</span><strong>${escape(event.label)}</strong></div></div><div class="event-body"><div class="event-meta"><span>${escape(event.type)}</span></div><h3>${escape(event.name)}</h3><p class="event-org">${escape(event.org)}</p><p>${escape(event.description)}</p><div class="event-role"><strong>MY PART</strong><span>${escape(event.role)}</span></div></div></article>`;
     archive.innerHTML = groupInfo.map(group => {
