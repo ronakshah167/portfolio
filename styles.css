@@ -883,3 +883,67 @@ body { text-rendering:optimizeLegibility; }
 @media(prefers-reduced-motion:reduce) {
   .comic-intro-name,.comic-intro-decor {animation:none!important}
 }
+
+/* Cinematic moving photo reel behind the editorial RONAK wordmark.
+   Uses the owner's real, previously uploaded photographs. */
+.comic-intro-marvel {
+  position:relative;isolation:isolate;width:min(1100px,100%);
+  min-height:clamp(180px,29vw,355px);display:grid;place-items:center;
+  overflow:hidden;border:3px solid rgba(255,255,255,.88);
+  box-shadow:10px 11px 0 #03050b;background:#111a2b;
+  transform:rotate(-1.5deg);
+}
+.comic-intro-marvel:before {
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(6,10,23,.4),transparent 33%,rgba(6,10,23,.50)),
+    linear-gradient(to right,rgba(3,5,11,.25),transparent 20%,transparent 80%,rgba(3,5,11,.25));
+}
+.comic-intro-marvel:after {
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:4;
+  box-shadow:inset 0 0 0 5px rgba(0,0,0,.7),inset 0 0 70px rgba(3,5,11,.8);
+}
+.comic-intro-reel {position:absolute;inset:0;z-index:0}
+.comic-reel-shot {
+  position:absolute;inset:0;background-size:cover;background-position:center 45%;
+  opacity:0;animation:comic-photo-cut 18s infinite linear;will-change:opacity,transform;
+  filter:saturate(.92) contrast(1.15);
+}
+.comic-reel-shot.shot-1 {background-image:url('assets/events/beyond-the-classroom.webp');animation-delay:0s}
+.comic-reel-shot.shot-2 {background-image:url('assets/events/artemis.webp');animation-delay:3s}
+.comic-reel-shot.shot-3 {background-image:url('assets/events/rtp-5.webp');animation-delay:6s}
+.comic-reel-shot.shot-4 {background-image:url('assets/events/dough-and-demo.webp');animation-delay:9s}
+.comic-reel-shot.shot-5 {background-image:url('assets/events/council-handover.webp');animation-delay:12s}
+.comic-reel-shot.shot-6 {background-image:url('assets/events/case-quest.webp');animation-delay:15s}
+@keyframes comic-photo-cut {
+  0%{opacity:0;transform:scale(1.08) translateX(-1%)}
+  3%,14%{opacity:1}
+  17%,100%{opacity:0;transform:scale(1.2) translateX(2%)}
+}
+.comic-intro-marvel .comic-intro-name {
+  position:relative;z-index:3;display:flex;align-items:center;justify-content:center;
+  padding:0 14px;width:100%;height:100%;gap:0;transform:none;filter:none;
+}
+.comic-intro-marvel .comic-intro-name span {
+  display:inline-block;flex:0 1 auto;width:auto;aspect-ratio:auto;
+  font-family:var(--display);font-size:clamp(82px,17vw,235px);line-height:1;
+  color:#fff;background:none!important;border:0;border-radius:0;
+  -webkit-text-stroke:clamp(2px,.5vw,7px) #0e1525;
+  text-shadow:5px 7px 0 #ff4e6c,9px 11px 0 #0e1525;
+  padding:0;margin:0;transform:none!important;letter-spacing:-.06em;
+}
+.comic-intro-marvel .comic-intro-name span:nth-child(2),
+.comic-intro-marvel .comic-intro-name span:nth-child(4) {
+  color:#ffde4e;-webkit-text-stroke-color:#111525;
+}
+@media(max-width:650px) {
+ .comic-intro-marvel {min-height:150px}
+ .comic-intro-marvel .comic-intro-name span {
+   font-size:17vw;text-shadow:2px 3px 0 #ff4e6c,4px 6px 0 #0e1525;
+   -webkit-text-stroke:2px #0e1525;
+ }
+ .comic-intro-marvel .comic-intro-name {padding:0 4px}
+}
+@media(prefers-reduced-motion:reduce) {
+ .comic-reel-shot {animation:none;opacity:0;transform:none}
+ .comic-reel-shot.shot-1 {opacity:1}
+}
