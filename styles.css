@@ -625,3 +625,261 @@ html[data-intro="on"] body { overflow: hidden; }
   outline:3px solid #e7ffa0;
   outline-offset:3px;
 }
+
+
+/* ================= COMIC BOOK REDESIGN / NOV 2026 =================
+   Original CSS-drawn panels & action bursts: no stock image dependencies.
+   This pass intentionally keeps ink-on-paper contrasts in both themes. */
+:root {
+  --comic-ink:#111525;
+  --comic-yellow:#ffdf45;
+  --comic-cyan:#12b8e7;
+  --comic-red:#ff4c65;
+  --comic-purple:#9671ef;
+}
+body { text-rendering:optimizeLegibility; }
+:is(h1,h2,h3,h4,.display-head,.subpage-title,.hero-title) { text-wrap:balance; }
+:where(.hero-copy,.event-body,.archive-card-main,.featured-content,.achievement-card,.exp-main) { overflow-wrap:break-word; }
+
+/* Intro: actual typeset RONAK (never a flattened photo / distorted A). */
+.cinema-intro.cinema-comic-intro {
+  background:#101525;color:#fff;
+  background-image:radial-gradient(circle at 50% 50%,rgba(0,191,236,.17),transparent 60%),
+    radial-gradient(circle at 18% 92%,rgba(255,64,105,.23),transparent 35%),
+    radial-gradient(circle at 90% 12%,rgba(254,218,60,.16),transparent 30%);
+}
+.cinema-comic-intro::before {
+  animation:none;inset:0;z-index:-1;
+  background:repeating-conic-gradient(from 8deg at 50% 55%,rgba(0,207,249,.16) 0deg 7deg,transparent 7deg 20deg);
+}
+.cinema-comic-intro::after {
+  content:"";position:absolute;inset:0;z-index:-1;opacity:.27;
+  background-image:radial-gradient(#fff 1.3px,transparent 1.8px);
+  background-size:17px 17px;mask-image:linear-gradient(to bottom,#000,transparent 75%);
+}
+.comic-intro-stage {
+  position:relative;isolation:isolate;width:min(1200px,94vw);
+  min-height:min(660px,88vh);display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:clamp(35px,6vh,80px) 12px;gap:clamp(13px,3vh,28px);text-align:center;
+}
+.comic-intro-decor {
+  position:absolute;width:clamp(120px,24vw,330px);aspect-ratio:1;
+  background:var(--comic-yellow);clip-path:polygon(50% 0,60% 24%,82% 8%,76% 32%,100% 27%,83% 50%,100% 72%,74% 70%,80% 100%,53% 79%,36% 100%,30% 75%,5% 85%,22% 55%,0 38%,29% 33%,18% 10%,42% 25%);opacity:.9;z-index:-1;
+}
+.comic-intro-decor-one {left:-8%;top:3%;transform:rotate(-19deg);background:var(--comic-cyan)}
+.comic-intro-decor-two {right:-8%;bottom:0;transform:rotate(18deg);background:var(--comic-red)}
+.comic-intro-eyebrow {font:800 11px var(--body);letter-spacing:.38em;color:#e7f6ff;margin:0}
+.comic-intro-presents {
+  border:2px solid #fff;background:#101525;padding:8px 23px;
+  font-size:clamp(10px,1.4vw,15px);font-weight:900;letter-spacing:.5em;margin:0;
+}
+.comic-intro-name {
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:clamp(1px,.5vw,9px);width:100%;padding:clamp(8px,1.3vw,18px);
+  transform:rotate(-1.5deg);filter:drop-shadow(8px 10px 0 #050508);
+}
+.comic-intro-name span {
+  display:flex;justify-content:center;align-items:center;min-width:0;
+  font-family:var(--display);font-size:clamp(50px,15.8vw,205px);line-height:1;
+  letter-spacing:-.09em;padding-right:.09em;aspect-ratio:.78;
+  color:#fff;text-shadow:2px 4px 0 var(--comic-ink);
+  background-color:#05bfec;border:clamp(2px,.4vw,5px) solid #fff;
+  border-radius:clamp(5px,1vw,13px);
+  background-image:radial-gradient(#10203d 1.6px,transparent 2px),
+    repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,255,255,.26) 0 9deg,transparent 9deg 23deg);
+  background-size:17px 17px,100% 100%;
+  -webkit-text-stroke:clamp(1px,.18vw,2px) #13223c;
+}
+.comic-intro-name span:nth-child(2) {background-color:#ff5981;transform:translateY(11px) rotate(3deg)}
+.comic-intro-name span:nth-child(3) {background-color:#ffd84a;transform:translateY(-9px) rotate(-3deg)}
+.comic-intro-name span:nth-child(4) {
+  /* The former trekking photo inside the letter A is completely removed. */
+  background-color:#a787f6;transform:translateY(9px) rotate(2deg);
+}
+.comic-intro-name span:nth-child(5) {background-color:#52dcc0;transform:rotate(-2deg)}
+.comic-intro-tagline {
+  color:#f6f8fb;line-height:1.9;font-size:clamp(10px,1.25vw,14px);
+  font-weight:850;letter-spacing:.12em;max-width:90%;margin:0;
+}
+.comic-intro-tagline b{color:var(--comic-yellow);padding:0 .4em}
+.comic-intro-enter {
+  display:inline-flex;align-items:center;justify-content:center;gap:20px;
+  background:var(--comic-yellow);border:3px solid #090a12;color:#111525;
+  box-shadow:7px 7px 0 var(--comic-cyan);padding:15px 26px;
+  font-weight:900;letter-spacing:.13em;font-size:clamp(12px,1.4vw,16px);
+  transform:rotate(-2deg);min-height:56px;transition:transform .2s,box-shadow .2s;
+}
+.comic-intro-enter:hover,.comic-intro-enter:focus-visible {transform:rotate(0deg) translateY(-3px);box-shadow:9px 10px 0 var(--comic-red)}
+.comic-intro-enter span {font-size:24px;line-height:1}
+.comic-intro-pop {
+  position:absolute;top:17%;font:clamp(18px,3.5vw,42px)/1 var(--marker);color:var(--comic-yellow);
+  text-shadow:3px 4px 0 #05080d;transform:rotate(-16deg);
+}
+.comic-intro-pop.pop-left {left:-1%}
+.comic-intro-pop.pop-right {left:auto;right:-1%;top:auto;bottom:14%;color:var(--comic-cyan);transform:rotate(12deg)}
+.cinema-comic-intro .cinema-exact-skip {position:absolute;z-index:20;right:22px;top:18px;width:auto;height:auto;clip-path:none;overflow:visible;padding:8px 12px;color:white;background:#222b40;border:1px solid #a7b2c8;text-decoration:none;letter-spacing:.1em;font-weight:700;font-size:11px}
+@media(max-width:650px) {
+ .comic-intro-stage{min-height: min(520px,87vh);width:97vw;gap:20px;padding:45px 8px}
+ .comic-intro-name{filter:drop-shadow(4px 5px 0 #050508);padding:4px}
+ .comic-intro-name span{font-size:17vw;aspect-ratio:.78;letter-spacing:-.1em}
+ .comic-intro-presents{letter-spacing:.25em}
+ .comic-intro-tagline{font-size:10px;letter-spacing:.08em}
+ .comic-intro-pop{display:none}
+ .comic-intro-decor{width:160px;opacity:.43}
+}
+
+/* Comic chapter canvases: burst rays, ink borders, halftone and paper panels. */
+.hero-copy,.origin-section,.split-story-section,.work-section,.event-section,.achievements-section {
+  background-image:radial-gradient(currentColor .75px,transparent 1px);
+  background-size:24px 24px;background-blend-mode:soft-light;
+}
+.hero-copy {background-image:radial-gradient(rgba(0,0,0,.075) 1px,transparent 1.3px);background-size:18px 18px}
+.hero-world {
+  background-color:#16bced;
+  background-image:repeating-conic-gradient(from 0deg at 50% 47%,rgba(255,255,255,.2) 0deg 10deg,transparent 10deg 23deg);
+}
+.hero-world:before {opacity:.12}
+.hero-frame{border-width:4px;border-radius:12px;overflow:hidden;box-shadow:11px 13px 0 var(--comic-ink)}
+.hero-tagline mark {background:var(--comic-yellow);color:#111525!important;border:2px solid #111525;padding:0 .14em}
+.hero-heading-wrap:before{content:"THE MAIN CHARACTER";display:inline-block;background:var(--comic-yellow);color:#111525;border:2px solid #111525;padding:5px 10px;margin-bottom:14px;font-size:9px;font-weight:900;letter-spacing:.12em;transform:rotate(-3deg)}
+.origin-comic-panel,.featured-project,.archive-card,.event-card,.achievement-card,.story-tile {
+  border-width:3px;border-color:var(--comic-ink);box-shadow:8px 9px 0 var(--comic-ink);
+}
+.featured-cover,.archive-card-art,.event-photo,.story-tile-art {
+  background-image:radial-gradient(rgba(10,15,27,.20) 1.3px,transparent 1.8px),
+    repeating-conic-gradient(from 10deg at 70% 30%,rgba(255,255,255,.2) 0 8deg,transparent 8deg 20deg);
+  background-size:17px 17px,100% 100%;
+}
+.event-photo .photo-placeholder:before {background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,255,255,.3) 0 7deg,transparent 7deg 20deg)}
+.event-card:nth-child(4n+1) .event-photo {background-color:#00bde8}
+.event-card:nth-child(4n+2) .event-photo {background-color:#ffdc49}
+.event-card:nth-child(4n+3) .event-photo {background-color:#fa5c82}
+.event-card:nth-child(4n+4) .event-photo {background-color:#9d7dea}
+.event-era .event-card:hover {transform:translateY(-3px);box-shadow:12px 14px 0 var(--comic-ink)}
+.event-era .event-card {transition:transform .2s,box-shadow .2s}
+.event-era .event-card .event-photo {border-color:var(--comic-ink)}
+.event-era-kicker {letter-spacing:.15em;text-transform:uppercase}
+.event-era-heading h3,.archive-top h3 {text-shadow:3px 4px 0 rgba(150,113,239,.22)}
+.marquee-strip {background:#101525;color:#fff;border-top:4px solid #121525;border-bottom:4px solid #121525;transform:rotate(-1.2deg) scale(1.03)}
+.marquee-strip .marquee-track span {color:#fff}
+.marquee-strip .marquee-track b {color:var(--comic-yellow)}
+.story-tile{position:relative;isolation:isolate}
+.story-tile:after{content:"✦";position:absolute;right:18px;top:30px;font-size:30px;color:#111525;transform:rotate(13deg)}
+.event-jump-links a,.filter-pill {font-weight:900;transition:transform .18s,background .18s,color .18s}
+.event-jump-links a:hover,.filter-pill:hover {transform:translateY(-2px)}
+.page-grain {opacity:.055}
+
+/* Contrast repair: dark canvas gets light text, colorful panels get dark ink. */
+:root[data-theme="dark"] {
+ --cream:#10131d;--paper:#1f2737;--ink:#f5f6ff;--muted:#d0d7e4;
+ --lime:#e3fa76;--violet:#c8baff;--pink:#ffadcc;--blue:#9be7f5;--orange:#ffc494;
+}
+:root[data-theme="dark"] body {background:#10131d;color:#f5f6ff}
+:root[data-theme="dark"] .hero-copy {background-color:#1f2737;color:#f5f6ff}
+:root[data-theme="dark"] .hero-tagline,
+:root[data-theme="dark"] .hero-description,
+:root[data-theme="dark"] .origin-lead,
+:root[data-theme="dark"] .origin-left > p,
+:root[data-theme="dark"] .featured-description,
+:root[data-theme="dark"] .archive-card p,
+:root[data-theme="dark"] .event-body p,
+:root[data-theme="dark"] .event-body .event-org,
+:root[data-theme="dark"] .achievement-card p,
+:root[data-theme="dark"] .exp-main p,
+:root[data-theme="dark"] .exp-main li,
+:root[data-theme="dark"] .exp-quote,
+:root[data-theme="dark"] .work-section-top > p,
+:root[data-theme="dark"] .event-era-heading > div > p,
+:root[data-theme="dark"] .subpage-desc,
+:root[data-theme="dark"] .section-side-note p,
+:root[data-theme="dark"] .project-number-line,
+:root[data-theme="dark"] .footer-inner,
+:root[data-theme="dark"] .site-footer,
+:root[data-theme="dark"] .site-footer a,
+:root[data-theme="dark"] .project-scroll-note,
+:root[data-theme="dark"] .hero-down {
+  color:#eef1fa;
+}
+:root[data-theme="dark"] .hero-intro,
+:root[data-theme="dark"] .event-era-kicker {color:#d2c4ff}
+:root[data-theme="dark"] .marquee-strip {background:#0f1525;color:#fff}
+:root[data-theme="dark"] .marquee-strip .marquee-track span {color:#fff}
+:root[data-theme="dark"] .marquee-strip .marquee-track b {color:#ffdf45}
+:root[data-theme="dark"] .hero-tagline mark{color:#121525!important;background:#e3fa76}
+:root[data-theme="dark"] .origin-section,
+:root[data-theme="dark"] .split-story-section,
+:root[data-theme="dark"] .work-section,
+:root[data-theme="dark"] .event-section,
+:root[data-theme="dark"] .achievements-section {color:#f5f6ff;background-color:#10131d}
+:root[data-theme="dark"] .archive-card,
+:root[data-theme="dark"] .featured-content,
+:root[data-theme="dark"] .event-body,
+:root[data-theme="dark"] .achievement-card,
+:root[data-theme="dark"] .exp-main {color:#f5f6ff}
+:root[data-theme="dark"] .hero-world,
+:root[data-theme="dark"] .featured-cover,
+:root[data-theme="dark"] .archive-card-art,
+:root[data-theme="dark"] .event-photo,
+:root[data-theme="dark"] .story-tile,
+:root[data-theme="dark"] .origin-comic-panel,
+:root[data-theme="dark"] .subpage-hero,
+:root[data-theme="dark"] .next-page-banner,
+:root[data-theme="dark"] .achievement-emblem,
+:root[data-theme="dark"] .achievement-hero-medal {
+  color:#131725;--ink:#141826;--paper:#fffdf4;--violet:#6d58de;
+}
+:root[data-theme="dark"] .story-tile p,
+:root[data-theme="dark"] .story-tile h3,
+:root[data-theme="dark"] .story-tile .story-link,
+:root[data-theme="dark"] .origin-comic-panel p,
+:root[data-theme="dark"] .origin-comic-panel h3,
+:root[data-theme="dark"] .origin-comic-panel strong,
+:root[data-theme="dark"] .subpage-hero .chapter-label,
+:root[data-theme="dark"] .subpage-hero .subpage-desc,
+:root[data-theme="dark"] .subpage-hero .subpage-title,
+:root[data-theme="dark"] .next-page-banner h2,
+:root[data-theme="dark"] .next-page-banner span {color:#111525}
+:root[data-theme="dark"] .subpage-hero .handwritten,
+:root[data-theme="dark"] .subpage-hero .subpage-title > span {color:#4c37b6}
+:root[data-theme="dark"] .story-tile .story-link {border-color:#151525}
+:root[data-theme="dark"] .hero-world .speech-bubble,
+:root[data-theme="dark"] .hero-world .floating-caption,
+:root[data-theme="dark"] .origin-comic-panel .skill-bubbles span {color:#121525}
+:root[data-theme="dark"] .filter-pill,
+:root[data-theme="dark"] .event-jump-links a {
+  background:#29344a;color:#fff;border:2px solid #c6d4ec;box-shadow:3px 3px 0 #080e19
+}
+:root[data-theme="dark"] .filter-pill.is-active {
+  background:#e3fa76;color:#151525;border-color:#e3fa76
+}
+:root[data-theme="dark"] .filter-pill:hover,
+:root[data-theme="dark"] .event-jump-links a:hover {background:#465473;color:#fff}
+:root[data-theme="dark"] .filter-pill.is-active:hover {background:#e3fa76;color:#151525}
+:root[data-theme="dark"] .event-era-count,
+:root[data-theme="dark"] .chapter-label .number-block {color:#151525}
+:root[data-theme="dark"] .event-body .event-role,
+:root[data-theme="dark"] .event-body .event-meta {color:#f5f6ff}
+:root[data-theme="dark"] .tag-list span,
+:root[data-theme="dark"] .exp-main .tag-list span {background:#344159;border-color:#a1adca;color:#fff}
+:root[data-theme="dark"] .project-scroll-scene {color:#f5f6ff}
+:root[data-theme="dark"] .hero-heading-wrap:before{color:#111525}
+:root[data-theme="dark"] .nav-inner {border:2px solid #a5b1c9}
+:root[data-theme="dark"] .nav-links .nav-resume {background:#e3fa76;color:#111525}
+:root[data-theme="dark"] .nav-links a {color:#f5f6ff}
+:root[data-theme="dark"] .nav-links .nav-resume {color:#111525}
+:root[data-theme="dark"] .brand-symbol {background:#e3fa76;color:#111525}
+:root[data-theme="dark"] .hero-frame,
+:root[data-theme="dark"] .event-card,
+:root[data-theme="dark"] .archive-card,
+:root[data-theme="dark"] .featured-project,
+:root[data-theme="dark"] .story-tile,
+:root[data-theme="dark"] .achievement-card {border-color:#c7d0e4}
+:root[data-theme="dark"] .hero-frame {box-shadow:10px 12px 0 #070a10}
+:root[data-theme="dark"] .origin-comic-panel {border-color:#1e2331}
+:root[data-theme="dark"] .event-photo .photo-placeholder{color:#121525}
+:root[data-theme="dark"] .event-photo .photo-placeholder strong {color:#121525}
+:root[data-theme="dark"] .page-back {color:#151525}
+:root[data-theme="dark"] .page-back:hover {color:#4e37b9}
+@media(prefers-reduced-motion:reduce) {
+  .comic-intro-name,.comic-intro-decor {animation:none!important}
+}
