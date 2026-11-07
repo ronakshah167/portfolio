@@ -1073,3 +1073,17 @@ body.photo-lightbox-open {overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .comic-reel-shot.is-live{transition:none!important}
 }
+
+
+/* Certificate / LOA actions stay visible even before PDF uploads. */
+.work-proof{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.work-proof-notice{
+  display:inline-flex;align-items:center;
+  padding:8px 11px;border:2px dashed #51418a;border-radius:5px;
+  background:#fff;color:#252135!important;
+  font-size:12px;font-weight:850;
+}
+.work-proof-notice[hidden]{display:none!important}
+:root[data-theme="dark"] .experience-card .work-proof-notice {
+  color:#252135!important;background:#fff;
+}
