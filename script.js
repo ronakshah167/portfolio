@@ -219,22 +219,22 @@
         if (!item.document) return;
         const wrap = document.createElement('div');
         wrap.className = 'work-proof';
-        const action = document.createElement('a');
+        const action = document.createElement('button');
+        action.type = 'button';
         action.className = 'work-proof-link';
-        action.textContent = '↗  ' + item.document.label;
-        action.href = item.document.url;
-        action.target = '_blank';
-        action.rel = 'noopener noreferrer';
+        action.textContent = '◉  ' + item.document.label;
+        action.setAttribute('aria-label', item.document.label + ' for ' + item.org);
+        action.dataset.documentUrl = item.document.url;
+        action.dataset.documentTitle = item.org + ' — ' + item.document.label;
         const notice = document.createElement('span');
         notice.className = 'work-proof-notice';
         notice.setAttribute('role','status');
         notice.hidden = true;
         notice.textContent = 'Document not uploaded yet.';
         let available = false;
-        action.addEventListener('click', event => {
-          if (available) return;
-          event.preventDefault();
-          notice.hidden = false;
+        action.addEventListener('click', () => {
+          if (!available) { notice.hidden = false; return; }
+          openDocumentViewer(item.document.url, item.org + ' — ' + item.document.label, action);
         });
         wrap.append(action, notice);
         details.append(wrap);
@@ -311,6 +311,126 @@
   }
 
   // Accessible full-size photo lightbox for achievements and event images.
+
+  // Canvas-based document reader: no native PDF browser toolbar or download action.
+  // The actual public asset URLs remain accessible to a technically capable visitor.
+  const PDFJS_SOURCE = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  const PDFJS_WORKER = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  let pdfjsPromise;
+  function loadPdfLibrary() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if (!pdfjsPromise) pdfjsPromise = new Promise((resolve,reject) => {
+      const script = document.createElement('script');
+      script.src = PDFJS_SOURCE; script.crossOrigin = 'anonymous';
+      script.onload = () => {
+        if (!window.pdfjsLib) { reject(new Error('PDF reader could not load')); return; }
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+        resolve(window.pdfjsLib);
+      };
+      script.onerror = () => reject(new Error('PDF reader is unavailable'));
+      document.head.append(script);
+    });
+    return pdfjsPromise;
+  }
+
+  let documentViewer;
+  function openDocumentViewer(url, title, returnFocus) {
+    if (!documentViewer) {
+      const overlay = document.createElement('div');
+      overlay.className = 'document-viewer';
+      overlay.hidden = true;
+      overlay.setAttribute('role','dialog');
+      overlay.setAttribute('aria-modal','true');
+      overlay.setAttribute('aria-label','Document viewer');
+      overlay.innerHTML = `<div class="document-viewer-scrim" data-document-close></div>
+        <section class="document-viewer-panel">
+          <header class="document-viewer-header">
+            <strong id="document-viewer-title"></strong>
+            <button type="button" class="document-viewer-close" data-document-close aria-label="Close document">✕</button>
+          </header>
+          <div class="document-viewer-sheet"><canvas id="document-viewer-canvas" aria-label="Document page"></canvas></div>
+          <footer class="document-viewer-footer">
+            <button type="button" id="document-viewer-prev" aria-label="Previous page">← PREV</button>
+            <span id="document-viewer-counter" role="status">Loading document…</span>
+            <button type="button" id="document-viewer-next" aria-label="Next page">NEXT →</button>
+          </footer>
+        </section>`;
+      document.body.append(overlay);
+      const canvas = overlay.querySelector('canvas');
+      const pageStatus = overlay.querySelector('#document-viewer-counter');
+      const previous = overlay.querySelector('#document-viewer-prev');
+      const next = overlay.querySelector('#document-viewer-next');
+      const close = overlay.querySelector('.document-viewer-close');
+      let pdf, pageNumber = 1, currentFocus, renderToken = 0, renderTask;
+      const dismiss = () => {
+        if (overlay.hidden) return;
+        overlay.hidden = true; document.body.classList.remove('document-viewer-open');
+        renderToken++; if (renderTask) renderTask.cancel();
+        pdf = null; currentFocus?.focus?.();
+      };
+      async function render() {
+        if (!pdf || overlay.hidden) return;
+        const token = ++renderToken;
+        if (renderTask) { try { renderTask.cancel(); await renderTask.promise; } catch (_) {} }
+        try {
+          const page = await pdf.getPage(pageNumber);
+          if (token !== renderToken || overlay.hidden) return;
+          const container = overlay.querySelector('.document-viewer-sheet');
+          const source = page.getViewport({scale:1});
+          const scale = Math.min(2, Math.max(.45, (container.clientWidth - 24) / source.width));
+          const viewport = page.getViewport({scale});
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.ceil(viewport.width * dpr);
+          canvas.height = Math.ceil(viewport.height * dpr);
+          canvas.style.width = viewport.width + 'px';
+          canvas.style.height = viewport.height + 'px';
+          const ctx = canvas.getContext('2d');
+          ctx.setTransform(dpr,0,0,dpr,0,0);
+          renderTask = page.render({canvasContext:ctx,viewport});
+          await renderTask.promise;
+          if (token !== renderToken) return;
+          pageStatus.textContent = 'PAGE ' + pageNumber + ' OF ' + pdf.numPages;
+          previous.disabled = pageNumber <= 1;
+          next.disabled = pageNumber >= pdf.numPages;
+        } catch (error) {
+          if (error?.name === 'RenderingCancelledException') return;
+          pageStatus.textContent = 'Unable to display document';
+        }
+      }
+      previous.addEventListener('click', () => { if (pdf && pageNumber > 1) { pageNumber--; render(); } });
+      next.addEventListener('click', () => { if (pdf && pageNumber < pdf.numPages) { pageNumber++; render(); } });
+      overlay.querySelectorAll('[data-document-close]').forEach(node => node.addEventListener('click',dismiss));
+      overlay.addEventListener('keydown', event => {
+        if (event.key === 'Escape') { event.preventDefault(); dismiss(); }
+        if (event.key === 'Tab') {
+          const focusables = [close,previous,next].filter(el=>!el.disabled);
+          const i = focusables.indexOf(document.activeElement);
+          if (event.shiftKey && i === 0) { event.preventDefault(); focusables[focusables.length-1].focus(); }
+          if (!event.shiftKey && i === focusables.length-1) { event.preventDefault(); focusables[0].focus(); }
+        }
+      });
+      documentViewer = {
+        async show(uri,label,sourceFocus) {
+          overlay.hidden = false; document.body.classList.add('document-viewer-open');
+          currentFocus = sourceFocus; close.focus();
+          overlay.querySelector('#document-viewer-title').textContent = label;
+          pageStatus.textContent = 'Loading document…';
+          previous.disabled = next.disabled = true;
+          const token = ++renderToken;
+          try {
+            const lib = await loadPdfLibrary();
+            const doc = await lib.getDocument({url:uri}).promise;
+            if (token !== renderToken || overlay.hidden) { doc.destroy(); return; }
+            pdf = doc; pageNumber = 1; await render();
+          } catch (_) {
+            if (token === renderToken && !overlay.hidden) pageStatus.textContent = 'Document unavailable right now';
+          }
+        }
+      };
+    }
+    documentViewer.show(url,title,returnFocus);
+  }
+
   function initPhotoViewer() {
     const overlay = document.createElement('div');
     overlay.className = 'photo-lightbox';
@@ -321,16 +441,14 @@
     overlay.innerHTML = `<div class="photo-lightbox-scrim" data-photo-close></div>
       <section class="photo-lightbox-panel" aria-label="Photo viewer">
         <div class="photo-lightbox-top"><strong id="photo-lightbox-title"></strong><div class="photo-lightbox-tools">
-          <a class="photo-lightbox-original" id="photo-lightbox-original" target="_blank" rel="noopener noreferrer" download>OPEN ORIGINAL ↗</a>
           <button class="photo-lightbox-close" type="button" data-photo-close aria-label="Close photograph">✕</button>
         </div></div>
         <div class="photo-lightbox-image-wrap"><img id="photo-lightbox-image" alt="" /></div>
-        <p class="photo-lightbox-help">Tap the photo to zoom · ESC to close</p>
+        <p class="photo-lightbox-help">View photo · Tap to zoom · ESC to close</p>
       </section>`;
     document.body.appendChild(overlay);
     const large = overlay.querySelector('#photo-lightbox-image');
     const heading = overlay.querySelector('#photo-lightbox-title');
-    const original = overlay.querySelector('#photo-lightbox-original');
     const closer = overlay.querySelector('.photo-lightbox-close');
     let restoreFocus = null;
     function close() {
@@ -352,7 +470,6 @@
       heading.textContent = trigger.dataset.photoTitle || preview.alt || 'Portfolio photo';
       large.src = source;
       large.alt = preview.alt;
-      original.href = source;
       overlay.hidden = false;
       document.body.classList.add('photo-lightbox-open');
       closer.focus();
@@ -366,13 +483,11 @@
         return;
       }
       if (event.key === 'Tab') {
-        const focusables = [original,closer];
-        if (event.shiftKey && document.activeElement === focusables[0]) { event.preventDefault(); closer.focus(); }
-        else if (!event.shiftKey && document.activeElement === closer) { event.preventDefault(); original.focus(); }
+        event.preventDefault();
+        closer.focus();
       }
     });
     large.addEventListener('click', () => large.classList.toggle('is-zoomed'));
-    original.addEventListener('click', () => {});
   }
 
   // Load every available event/achievement photo; omit missing assets.
