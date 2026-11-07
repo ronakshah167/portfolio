@@ -58,6 +58,7 @@ window.PORTFOLIO_DATA = {
       category: 'CLIMATE / HACKATHON',
       title: 'Climate Hack',
       result: 'HACKATHON WINNER',
+      image: 'assets/events/climate-hack.webp',
       symbol: '★',
       accent: 'blue',
       description: 'Won a climate-focused hackathon.'
