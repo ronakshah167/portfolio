@@ -132,7 +132,7 @@
     grid.innerHTML = data.achievements.map((award, i) => `
       <article class="achievement-card accent-${escape(award.accent)} reveal">
         <div class="achievement-card-meta"><span>${escape(award.category)}</span><span>0${i+1} / 0${data.achievements.length}</span></div>
-        ${award.image ? `<div class="achievement-proof"><img src="${escape(award.image)}" alt="${escape(award.title)} team photo" loading="lazy" decoding="async" /></div>` : `<div class="achievement-emblem" aria-hidden="true"><span>${escape(award.symbol)}</span></div>`}
+        ${award.image ? `<button type="button" class="achievement-proof photo-open-trigger" data-photo-open data-photo-title="${escape(award.title)}" aria-label="View full-size photo of ${escape(award.title)}"><img src="${escape(award.image)}" alt="${escape(award.title)} team photo" loading="lazy" decoding="async" /><span class="photo-expand-icon" aria-hidden="true">⤢ VIEW PHOTO</span></button>` : `<div class="achievement-emblem" aria-hidden="true"><span>${escape(award.symbol)}</span></div>`}
         <div class="achievement-card-content"><span class="achievement-result">${escape(award.result)}</span><h3>${escape(award.title)}</h3><p>${escape(award.description)}</p></div>
       </article>`).join('');
   }
@@ -230,7 +230,7 @@
       img.alt = `${event.name} — event photograph`;
       img.loading = 'lazy';
       img.decoding = 'async';
-      img.addEventListener('load', () => { frame.classList.add('has-photo'); });
+      img.addEventListener('load', () => { frame.classList.add('has-photo','photo-open-trigger'); frame.setAttribute('data-photo-open', ''); frame.setAttribute('data-photo-title', event.name); frame.setAttribute('role','button'); frame.setAttribute('tabindex','0'); frame.setAttribute('aria-label', `View full-size photo of ${event.name}`); });
       img.addEventListener('error', () => { img.remove(); frame.classList.add('missing-photo'); });
       if (event.position) img.style.objectPosition = event.position;
       frame.append(img);
@@ -268,5 +268,71 @@
       });
     }
   }
-  initChrome(); initCinematicIntro(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initReveals(); initMotion();
+
+  // Accessible full-size photo lightbox for achievements and event images.
+  function initPhotoViewer() {
+    const overlay = document.createElement('div');
+    overlay.className = 'photo-lightbox';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.setAttribute('aria-label','Full-size portfolio photograph');
+    overlay.hidden = true;
+    overlay.innerHTML = `<div class="photo-lightbox-scrim" data-photo-close></div>
+      <section class="photo-lightbox-panel" aria-label="Photo viewer">
+        <div class="photo-lightbox-top"><strong id="photo-lightbox-title"></strong><div class="photo-lightbox-tools">
+          <a class="photo-lightbox-original" id="photo-lightbox-original" target="_blank" rel="noopener noreferrer" download>OPEN ORIGINAL ↗</a>
+          <button class="photo-lightbox-close" type="button" data-photo-close aria-label="Close photograph">✕</button>
+        </div></div>
+        <div class="photo-lightbox-image-wrap"><img id="photo-lightbox-image" alt="" /></div>
+        <p class="photo-lightbox-help">Tap the photo to zoom · ESC to close</p>
+      </section>`;
+    document.body.appendChild(overlay);
+    const large = overlay.querySelector('#photo-lightbox-image');
+    const heading = overlay.querySelector('#photo-lightbox-title');
+    const original = overlay.querySelector('#photo-lightbox-original');
+    const closer = overlay.querySelector('.photo-lightbox-close');
+    let restoreFocus = null;
+    function close() {
+      if (overlay.hidden) return;
+      overlay.hidden = true;
+      document.body.classList.remove('photo-lightbox-open');
+      large.classList.remove('is-zoomed');
+      large.removeAttribute('src');
+      restoreFocus?.focus?.();
+    }
+    document.addEventListener('click', event => {
+      if (event.target.closest('[data-photo-close]')) { close(); return; }
+      const trigger = event.target.closest('[data-photo-open]');
+      if (!trigger) return;
+      const preview = trigger.querySelector('img');
+      if (!preview?.complete || !preview.naturalWidth) return;
+      restoreFocus = trigger;
+      const source = preview.currentSrc || preview.src;
+      heading.textContent = trigger.dataset.photoTitle || preview.alt || 'Portfolio photo';
+      large.src = source;
+      large.alt = preview.alt;
+      original.href = source;
+      overlay.hidden = false;
+      document.body.classList.add('photo-lightbox-open');
+      closer.focus();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !overlay.hidden) { event.preventDefault(); close(); }
+      if (overlay.hidden) {
+        if ((event.key === 'Enter' || event.key === ' ') && document.activeElement?.matches('.event-photo[data-photo-open]')) {
+          event.preventDefault(); document.activeElement.click();
+        }
+        return;
+      }
+      if (event.key === 'Tab') {
+        const focusables = [original,closer];
+        if (event.shiftKey && document.activeElement === focusables[0]) { event.preventDefault(); closer.focus(); }
+        else if (!event.shiftKey && document.activeElement === closer) { event.preventDefault(); original.focus(); }
+      }
+    });
+    large.addEventListener('click', () => large.classList.toggle('is-zoomed'));
+    original.addEventListener('click', () => {});
+  }
+
+  initChrome(); initCinematicIntro(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initPhotoViewer(); initReveals(); initMotion();
 })();
