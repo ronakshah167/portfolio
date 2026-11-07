@@ -205,6 +205,30 @@
     const render = (filter) => {
       const records = data.experience.filter(x => filter === 'all' || x.type === filter);
       list.innerHTML = records.map(x => `<article class="experience-card reveal is-visible"><div class="exp-index">${escape(x.index)}</div><div class="exp-main"><div class="exp-meta"><span>${escape(x.type.toUpperCase())}</span><span>${escape(x.date)}</span></div><h3>${escape(x.role)}</h3><h4>${escape(x.org)}</h4><p class="exp-quote">${escape(x.summary)}</p><ul>${x.details.map(d => `<li>${escape(d)}</li>`).join('')}</ul><div class="tag-list">${x.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div></div></article>`).join('');
+      // Append verified document links only after their real PDFs are uploaded.
+      Array.from(list.querySelectorAll('.experience-card')).forEach((card, position) => {
+        const item = records[position], details = card.querySelector('.exp-main');
+        if (!details) return;
+        if (item.role === 'Freelance Work') {
+          const status = document.createElement('div');
+          status.className = 'work-progress';
+          status.textContent = '●  WORK IN PROGRESS';
+          details.append(status); // A label, never a link.
+        }
+        if (!item.document) return;
+        fetch(item.document.url, { method:'HEAD' }).then(response => {
+          if (!response.ok || !(response.headers.get('content-type') || '').toLowerCase().includes('pdf')) return;
+          if (!details.isConnected) return;
+          const wrap = document.createElement('div');
+          wrap.className = 'work-proof';
+          const link = document.createElement('a');
+          link.className = 'work-proof-link';
+          link.textContent = '↗  ' + item.document.label;
+          link.href = item.document.url;
+          link.target = '_blank'; link.rel = 'noopener noreferrer';
+          wrap.append(link); details.append(wrap);
+        }).catch(() => {});
+      });
     };
     render('all');
     if (filters) filters.addEventListener('click',(e)=>{ const btn=e.target.closest('button[data-filter]');if(!btn) return; $$('button',filters).forEach(b => { const active=b===btn;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active)); });render(btn.dataset.filter); });
@@ -334,5 +358,42 @@
     original.addEventListener('click', () => {});
   }
 
-  initChrome(); initCinematicIntro(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initPhotoViewer(); initReveals(); initMotion();
+  // Load every available event/achievement photo; omit missing assets.
+  function initComicIntroReel() {
+    const reel = document.querySelector('.comic-intro-reel');
+    if (!reel) return;
+    const urls = [...new Set([
+      ...(data.events || []).map(item => item.image),
+      ...(data.achievements || []).map(item => item.image)
+    ].filter(Boolean))];
+    const validate = url => new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => resolve(null);
+      img.src = url;
+    });
+    Promise.all(urls.map(validate)).then(found => {
+      const photos = found.filter(Boolean);
+      if (!photos.length) return;
+      const front = document.createElement('div');
+      front.className = 'comic-reel-shot is-live is-on';
+      front.style.backgroundImage = 'url(' + JSON.stringify(photos[0]) + ')';
+      reel.replaceChildren(front);
+      if (reducedMotion.matches || photos.length === 1) return;
+      const back = document.createElement('div');
+      back.className = 'comic-reel-shot is-live';
+      reel.append(back);
+      let position=0, current=front;
+      window.setInterval(() => {
+        if (document.documentElement.dataset.intro !== 'on') return;
+        position = (position + 1) % photos.length;
+        const next = current === front ? back : front;
+        next.style.backgroundImage = 'url(' + JSON.stringify(photos[position]) + ')';
+        next.classList.add('is-on');
+        current.classList.remove('is-on');
+        current = next;
+      }, 900);
+    });
+  }
+  initChrome(); initCinematicIntro(); initComicIntroReel(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initPhotoViewer(); initReveals(); initMotion();
 })();
