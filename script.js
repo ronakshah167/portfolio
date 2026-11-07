@@ -357,6 +357,8 @@
         </section>`;
       document.body.append(overlay);
       const canvas = overlay.querySelector('canvas');
+      canvas.addEventListener('contextmenu', event => event.preventDefault());
+      canvas.addEventListener('dragstart', event => event.preventDefault());
       const pageStatus = overlay.querySelector('#document-viewer-counter');
       const previous = overlay.querySelector('#document-viewer-prev');
       const next = overlay.querySelector('#document-viewer-next');
@@ -488,6 +490,12 @@
       }
     });
     large.addEventListener('click', () => large.classList.toggle('is-zoomed'));
+    // Hide ordinary browser save-image controls on the in-page gallery.
+    // This is UI-level deterrence, not DRM for publicly accessible image URLs.
+    overlay.addEventListener('contextmenu', event => {
+      if (event.target.closest('.photo-lightbox-image-wrap')) event.preventDefault();
+    });
+    large.addEventListener('dragstart', event => event.preventDefault());
   }
 
   // Load every available event/achievement photo; omit missing assets.
