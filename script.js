@@ -205,7 +205,8 @@
     const render = (filter) => {
       const records = data.experience.filter(x => filter === 'all' || x.type === filter);
       list.innerHTML = records.map(x => `<article class="experience-card reveal is-visible"><div class="exp-index">${escape(x.index)}</div><div class="exp-main"><div class="exp-meta"><span>${escape(x.type.toUpperCase())}</span><span>${escape(x.date)}</span></div><h3>${escape(x.role)}</h3><h4>${escape(x.org)}</h4><p class="exp-quote">${escape(x.summary)}</p><ul>${x.details.map(d => `<li>${escape(d)}</li>`).join('')}</ul><div class="tag-list">${x.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div></div></article>`).join('');
-      // Append verified document links only after their real PDFs are uploaded.
+      // Always show document actions. A missing PDF opens an accessible inline notice,
+      // rather than hiding the action or navigating to a broken link.
       Array.from(list.querySelectorAll('.experience-card')).forEach((card, position) => {
         const item = records[position], details = card.querySelector('.exp-main');
         if (!details) return;
@@ -213,21 +214,37 @@
           const status = document.createElement('div');
           status.className = 'work-progress';
           status.textContent = '●  WORK IN PROGRESS';
-          details.append(status); // A label, never a link.
+          details.append(status); // Label only, not a link.
         }
         if (!item.document) return;
+        const wrap = document.createElement('div');
+        wrap.className = 'work-proof';
+        const action = document.createElement('a');
+        action.className = 'work-proof-link';
+        action.textContent = '↗  ' + item.document.label;
+        action.href = item.document.url;
+        action.target = '_blank';
+        action.rel = 'noopener noreferrer';
+        const notice = document.createElement('span');
+        notice.className = 'work-proof-notice';
+        notice.setAttribute('role','status');
+        notice.hidden = true;
+        notice.textContent = 'Document not uploaded yet.';
+        let available = false;
+        action.addEventListener('click', event => {
+          if (available) return;
+          event.preventDefault();
+          notice.hidden = false;
+        });
+        wrap.append(action, notice);
+        details.append(wrap);
         fetch(item.document.url, { method:'HEAD' }).then(response => {
-          if (!response.ok || !(response.headers.get('content-type') || '').toLowerCase().includes('pdf')) return;
-          if (!details.isConnected) return;
-          const wrap = document.createElement('div');
-          wrap.className = 'work-proof';
-          const link = document.createElement('a');
-          link.className = 'work-proof-link';
-          link.textContent = '↗  ' + item.document.label;
-          link.href = item.document.url;
-          link.target = '_blank'; link.rel = 'noopener noreferrer';
-          wrap.append(link); details.append(wrap);
-        }).catch(() => {});
+          available = response.ok && (response.headers.get('content-type') || '').toLowerCase().includes('pdf');
+          if (available) notice.hidden = true;
+          else action.setAttribute('aria-description','Document not uploaded yet');
+        }).catch(() => {
+          action.setAttribute('aria-description','Document not uploaded yet');
+        });
       });
     };
     render('all');
