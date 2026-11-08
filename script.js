@@ -143,7 +143,7 @@
     grid.innerHTML = data.participatedEvents.map((entry,i) => {
       const number = String(i+1).padStart(2,'0');
       const isImage = entry.certificate?.type === 'image';
-      const thumbnail = isImage ? '<div class="participation-thumb"><img src="' + escape(entry.certificate.url) + '" alt="' + escape(entry.title) + ' participation certificate" loading="lazy" decoding="async"></div>' : '<div class="participation-decor" aria-hidden="true">✦</div>';
+      const thumbnail = isImage ? '<button type="button" class="participation-thumb participation-thumb-button" data-photo-open data-photo-title="' + escape(entry.title + ' — Participation Certificate') + '" aria-label="View full size certificate for ' + escape(entry.title) + '"><img src="' + escape(entry.certificate.url) + '" alt="' + escape(entry.title) + ' participation certificate" loading="lazy" decoding="async"></button>' : '<div class="participation-decor" aria-hidden="true">✦</div>';
       return '<article class="participation-card reveal is-visible" id="participation-' + escape(entry.id) + '">' +
         '<div class="participation-top"><span class="participation-num">' + number + '</span><span class="participation-type">' + escape(entry.type) + '</span></div>' +
         thumbnail + '<h3>' + escape(entry.title) + '</h3>' +
@@ -159,14 +159,8 @@
       const message = card?.querySelector('.participation-message');
       if (!item.certificate) { if (message) message.hidden = false; return; }
       if (item.certificate.type === 'image') {
-        const image = card?.querySelector('.participation-thumb img');
-        if (image?.complete && image.naturalWidth) {
-          const photoTrigger = document.createElement('span');
-          photoTrigger.setAttribute('data-photo-open','');
-          photoTrigger.dataset.photoTitle = item.title + ' — Participation Certificate';
-          photoTrigger.append(image.cloneNode());
-          card.append(photoTrigger); photoTrigger.click(); photoTrigger.remove();
-        } else if (message) { message.textContent = 'Certificate image is loading. Please try again.'; message.hidden = false; }
+        const trigger = card?.querySelector('.participation-thumb-button');
+        if (trigger) trigger.click();
         return;
       }
       if (item.certificate.type === 'pdf') {
