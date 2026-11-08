@@ -137,6 +137,47 @@
       </article>`).join('');
   }
 
+  function initParticipatedEvents() {
+    const grid = $('#participation-grid');
+    if (!grid || !Array.isArray(data.participatedEvents)) return;
+    grid.innerHTML = data.participatedEvents.map((entry,i) => {
+      const number = String(i+1).padStart(2,'0');
+      const isImage = entry.certificate?.type === 'image';
+      const thumbnail = isImage ? '<div class="participation-thumb"><img src="' + escape(entry.certificate.url) + '" alt="' + escape(entry.title) + ' participation certificate" loading="lazy" decoding="async"></div>' : '<div class="participation-decor" aria-hidden="true">✦</div>';
+      return '<article class="participation-card reveal is-visible" id="participation-' + escape(entry.id) + '">' +
+        '<div class="participation-top"><span class="participation-num">' + number + '</span><span class="participation-type">' + escape(entry.type) + '</span></div>' +
+        thumbnail + '<h3>' + escape(entry.title) + '</h3>' +
+        '<button class="participation-certificate" type="button" data-participation-id="' + escape(entry.id) + '">◉ VIEW CERTIFICATE <span aria-hidden="true">↗</span></button>' +
+        '<p class="participation-message" role="status" hidden>Certificate not uploaded yet.</p></article>';
+    }).join('');
+    grid.addEventListener('click', event => {
+      const action = event.target.closest('button[data-participation-id]');
+      if (!action) return;
+      const item = data.participatedEvents.find(record => record.id === action.dataset.participationId);
+      if (!item) return;
+      const card = action.closest('.participation-card');
+      const message = card?.querySelector('.participation-message');
+      if (!item.certificate) { if (message) message.hidden = false; return; }
+      if (item.certificate.type === 'image') {
+        const image = card?.querySelector('.participation-thumb img');
+        if (image?.complete && image.naturalWidth) {
+          const photoTrigger = document.createElement('span');
+          photoTrigger.setAttribute('data-photo-open','');
+          photoTrigger.dataset.photoTitle = item.title + ' — Participation Certificate';
+          photoTrigger.append(image.cloneNode());
+          card.append(photoTrigger); photoTrigger.click(); photoTrigger.remove();
+        } else if (message) { message.textContent = 'Certificate image is loading. Please try again.'; message.hidden = false; }
+        return;
+      }
+      if (item.certificate.type === 'pdf') {
+        fetch(item.certificate.url, {method:'HEAD'}).then(response => {
+          if (!response.ok) { if (message) message.hidden = false; return; }
+          if (message) message.hidden = true;
+          openDocumentViewer(item.certificate.url, item.title + ' — Participation Certificate', action);
+        }).catch(() => { if (message) message.hidden = false; });
+      }
+    });
+  }
   const decor = (project) => {
     const form = {
       'all-in': ['{', 'AI', '}'],
@@ -535,5 +576,5 @@
       }, 900);
     });
   }
-  initChrome(); initCinematicIntro(); initComicIntroReel(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initPhotoViewer(); initReveals(); initMotion();
+  initChrome(); initCinematicIntro(); initComicIntroReel(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initParticipatedEvents(); initPhotoViewer(); initReveals(); initMotion();
 })();
