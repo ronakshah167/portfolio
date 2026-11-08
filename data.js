@@ -66,17 +66,17 @@ window.PORTFOLIO_DATA = {
   ],
   // Participation is deliberately separate from awards and competition wins.
   participatedEvents: [
-    {id:'climate-hackathon',title:'Climate Hackathon',type:'Hackathon',certificate:{type:'image',url:'assets/documents/climate-hackathon-participation.webp'}},
+    {id:'climate-hackathon',title:'Climate Hackathon',type:'Hackathon',certificate:{type:'pdf',url:'assets/documents/climate-hackathon-certificate.pdf'}},
     {id:'sih-2025',title:'SIH 2025',type:'Hackathon'},
-    {id:'nexolve',title:'Nexolve',type:'Event'},
+    {id:'nexolve',title:'Nexolve',type:'Hackathon',certificate:{type:'pdf',url:'assets/documents/nexolve-certificate.pdf'}},
     {id:'gdg',title:'GDG',type:'Event'},
     {id:'thinksprint',title:'Thinksprint',type:'Event'},
     {id:'case-study-competition',title:'Case Study Competition',type:'Case competition'},
-    {id:'case-quest',title:'Case Quest',type:'Case competition'},
+    {id:'case-quest',title:'Case Quest',type:'Case competition',certificate:{type:'pdf',url:'assets/documents/case-quest-certificate.pdf'}},
     {id:'the-big-short',title:'The Big Short',type:'Competition'},
     {id:'sih-2026',title:'SIH 26',type:'Hackathon'},
     {id:'adobe-hackathon',title:'Adobe Hackathon',type:'Hackathon',certificate:{type:'pdf',url:'assets/documents/adobe-hackathon-participation.pdf'}},
-    {id:'unstop-week-of-wins',title:'Unstop Week of Wins',type:'Event'}
+    {id:'unstop-week-of-wins',title:'Unstop Week of Wins',type:'Event',certificate:{type:'pdf',url:'assets/documents/week-of-wins-certificate.pdf'}}
   ],
   events: [
     {"id":"btc","era":"second","name":"BEYOND THE CLASSROOM (BTC)","type":"Campus Tech Talk","org":"KJSCE ACM Student Chapter","role":"Speaker · PR · marketing · operations · sponsor deliverables","description":"Spoke on “How Do Tech Councils Work?” to a packed 120-attendee seminar hall. Handled outreach, event operations, sponsor deliverables, and filming and editing promotional reels.","accent":"orange","image":"assets/events/beyond-the-classroom.webp","position":"50% 36%","label":"BEYOND THE CLASSROOM"},

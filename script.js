@@ -137,16 +137,16 @@
       </article>`).join('');
   }
 
+  // Every participation card uses the same visual template and view-only PDF reader.
   function initParticipatedEvents() {
     const grid = $('#participation-grid');
     if (!grid || !Array.isArray(data.participatedEvents)) return;
-    grid.innerHTML = data.participatedEvents.map((entry,i) => {
-      const number = String(i+1).padStart(2,'0');
-      const isImage = entry.certificate?.type === 'image';
-      const thumbnail = isImage ? '<button type="button" class="participation-thumb participation-thumb-button" data-photo-open data-photo-title="' + escape(entry.title + ' — Participation Certificate') + '" aria-label="View full size certificate for ' + escape(entry.title) + '"><img src="' + escape(entry.certificate.url) + '" alt="' + escape(entry.title) + ' participation certificate" loading="lazy" decoding="async"></button>' : '<div class="participation-decor" aria-hidden="true">✦</div>';
+    grid.innerHTML = data.participatedEvents.map((entry, i) => {
+      const number = String(i + 1).padStart(2, '0');
       return '<article class="participation-card reveal is-visible" id="participation-' + escape(entry.id) + '">' +
         '<div class="participation-top"><span class="participation-num">' + number + '</span><span class="participation-type">' + escape(entry.type) + '</span></div>' +
-        thumbnail + '<h3>' + escape(entry.title) + '</h3>' +
+        '<div class="participation-decor" aria-hidden="true">✦</div>' +
+        '<h3>' + escape(entry.title) + '</h3>' +
         '<button class="participation-certificate" type="button" data-participation-id="' + escape(entry.id) + '">◉ VIEW CERTIFICATE <span aria-hidden="true">↗</span></button>' +
         '<p class="participation-message" role="status" hidden>Certificate not uploaded yet.</p></article>';
     }).join('');
@@ -155,21 +155,19 @@
       if (!action) return;
       const item = data.participatedEvents.find(record => record.id === action.dataset.participationId);
       if (!item) return;
-      const card = action.closest('.participation-card');
-      const message = card?.querySelector('.participation-message');
-      if (!item.certificate) { if (message) message.hidden = false; return; }
-      if (item.certificate.type === 'image') {
-        const trigger = card?.querySelector('.participation-thumb-button');
-        if (trigger) trigger.click();
+      const message = action.closest('.participation-card')?.querySelector('.participation-message');
+      if (!item.certificate?.url) {
+        if (message) { message.textContent = 'Certificate not uploaded yet.'; message.hidden = false; }
         return;
       }
-      if (item.certificate.type === 'pdf') {
-        fetch(item.certificate.url, {method:'HEAD'}).then(response => {
-          if (!response.ok) { if (message) message.hidden = false; return; }
-          if (message) message.hidden = true;
-          openDocumentViewer(item.certificate.url, item.title + ' — Participation Certificate', action);
-        }).catch(() => { if (message) message.hidden = false; });
-      }
+      if (message) message.hidden = true;
+      fetch(item.certificate.url, {method:'HEAD'}).then(response => {
+        const type = (response.headers.get('content-type') || '').toLowerCase();
+        if (!response.ok || !type.includes('pdf')) throw new Error('Certificate unavailable');
+        openDocumentViewer(item.certificate.url, item.title + ' — Certificate', action);
+      }).catch(() => {
+        if (message) { message.textContent = 'Certificate is temporarily unavailable.'; message.hidden = false; }
+      });
     });
   }
   const decor = (project) => {
