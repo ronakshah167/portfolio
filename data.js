@@ -76,7 +76,6 @@ window.PORTFOLIO_DATA = {
     {src:'assets/events/reel-05-collaboration.webp',position:'50% 32%'},
     {src:'assets/events/reel-06-speaking.webp',position:'50% 30%'},
     {src:'assets/events/reel-07-alpine.webp',position:'50% 28%'},
-    {src:'assets/events/reel-10-paris.webp',position:'50% 29%'},
     {src:'assets/events/beyond-the-classroom.webp',position:'50% 28%'},
     {src:'assets/events/artemis.webp',position:'50% 28%'},
     {src:'assets/events/rtp-5.webp',position:'50% 30%'},

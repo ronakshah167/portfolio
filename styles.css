@@ -1393,3 +1393,66 @@ body.document-viewer-open{overflow:hidden}
     min-height:330px;
   }
 }
+
+
+/* Intro restoration: the full-size carousel moves BEHIND the large RONAK name. */
+.cinema-comic-intro .comic-intro-stage {
+  width:min(1420px,98vw);
+  gap:clamp(12px,2vh,24px);
+}
+.cinema-comic-intro .comic-intro-marvel {
+  position:relative;
+  width:min(1300px,100%);
+  height:clamp(420px,63dvh,760px);
+  min-height:420px;
+  max-height:75dvh;
+  isolation:isolate;
+  overflow:hidden;
+}
+.cinema-comic-intro .comic-intro-marvel .comic-intro-name.intro-name-overlay {
+  position:absolute!important;
+  inset:0!important;
+  z-index:5!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+  padding:0 clamp(5px,1.2vw,18px)!important;
+  width:100%!important;
+  height:100%!important;
+  background:linear-gradient(90deg,rgba(5,8,19,.15),transparent 18%,transparent 82%,rgba(5,8,19,.15))!important;
+  transform:none!important;
+  filter:none!important;
+  pointer-events:none;
+}
+.cinema-comic-intro .comic-intro-marvel .comic-intro-name.intro-name-overlay span {
+  display:inline-block!important;
+  flex:0 1 auto;
+  width:auto!important;
+  height:auto!important;
+  font-size:clamp(80px,15.9vw,220px)!important;
+  line-height:1!important;
+  color:#fff!important;
+  -webkit-text-stroke:clamp(2px,.38vw,6px) #101525!important;
+  text-shadow:4px 6px 0 #ff557b,8px 10px 0 #111525!important;
+  letter-spacing:-.065em!important;
+  padding:0!important;
+  transform:none!important;
+}
+.cinema-comic-intro .comic-intro-marvel .comic-intro-name.intro-name-overlay span:nth-child(2),
+.cinema-comic-intro .comic-intro-marvel .comic-intro-name.intro-name-overlay span:nth-child(4) {
+  color:#ffe578!important;
+}
+@media(max-width:650px) {
+  .cinema-comic-intro .comic-intro-stage{width:98vw;padding-inline:3px}
+  .cinema-comic-intro .comic-intro-marvel{
+    height:clamp(420px,62dvh,650px);
+    min-height:420px;
+    max-height:70dvh;
+  }
+  .cinema-comic-intro .comic-intro-marvel .comic-intro-name.intro-name-overlay span{
+    font-size:clamp(48px,16vw,105px)!important;
+    -webkit-text-stroke:2px #101525!important;
+    text-shadow:2px 3px 0 #ff557b,4px 5px 0 #101525!important;
+  }
+}
