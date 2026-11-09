@@ -1334,3 +1334,62 @@ body.document-viewer-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .comic-reel-shot.is-live{transition:none!important}
 }
+
+
+/* Name stays above the pictures; every face and body stays fully visible. */
+.cinema-intro.cinema-comic-intro{
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.cinema-comic-intro .comic-intro-stage{
+  width:min(1160px,96vw);
+  min-height:100dvh;
+  height:auto;
+  justify-content:center;
+  gap:clamp(10px,1.8vh,18px);
+  padding:clamp(32px,4vh,45px) 10px 26px;
+}
+.cinema-comic-intro .intro-name-above{
+  width:min(650px,92%);
+  height:auto;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:5px;
+  padding:0;
+  margin:0 auto;
+  filter:drop-shadow(4px 5px 0 #050508);
+  transform:rotate(-1deg);
+}
+.cinema-comic-intro .intro-name-above span{
+  display:grid;place-items:center;
+  width:100%;min-width:0;
+  aspect-ratio:1;
+  padding:0;
+  font-size:clamp(30px,6.5vw,82px);
+  line-height:1;
+  transform:none!important;
+  letter-spacing:0;
+}
+.cinema-comic-intro .comic-intro-marvel{
+  width:min(1080px,100%);
+  height:clamp(340px,52dvh,650px);
+  min-height:340px;
+  max-height:none;
+  transform:none;
+}
+.cinema-comic-intro .comic-intro-marvel::before{
+  background:linear-gradient(to bottom,rgba(4,8,21,.04),transparent 70%,rgba(4,8,21,.14));
+}
+.cinema-comic-intro .comic-reel-portrait{
+  object-fit:contain!important;
+  object-position:center!important;
+}
+@media(max-width:650px){
+  .cinema-comic-intro .comic-intro-stage{padding:50px 6px 24px;gap:14px}
+  .cinema-comic-intro .intro-name-above{width:min(450px,96%);gap:3px}
+  .cinema-comic-intro .intro-name-above span{font-size:clamp(30px,11vw,65px)}
+  .cinema-comic-intro .comic-intro-marvel{
+    height:clamp(330px,53dvh,560px);
+    min-height:330px;
+  }
+}
