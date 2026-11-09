@@ -1,4 +1,4 @@
-# ⚡ RONAK SHAH — The Creative Universe
+#  RONAK SHAH — The Creative Universe
 
 ### Developer. Builder. Finance Enthusiast. Event Organiser.
 
