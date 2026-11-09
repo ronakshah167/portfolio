@@ -65,18 +65,16 @@ window.PORTFOLIO_DATA = {
     }
   ],
   // Participation is deliberately separate from awards and competition wins.
+  // Curated face-visible intro photographs. Exclude back-facing shots, posters
+  // and the earlier Marvel-shirt auditorium photograph from the intro only.
   introCarouselImages: [
-    'assets/events/reel-01-auditorium.webp',
     'assets/events/reel-02-team.webp',
     'assets/events/reel-03-group.webp',
     'assets/events/reel-04-speaker.webp',
     'assets/events/reel-05-collaboration.webp',
     'assets/events/reel-06-speaking.webp',
     'assets/events/reel-07-alpine.webp',
-    'assets/events/reel-08-forest.webp',
-    'assets/events/reel-09-football.webp',
     'assets/events/reel-10-paris.webp',
-    'assets/events/reel-11-night.webp',
   ],
   participatedEvents: [
     {id:'climate-hackathon',title:'Climate Hackathon',type:'Hackathon',certificate:{type:'pdf',url:'assets/documents/climate-hackathon-certificate.pdf'}},
