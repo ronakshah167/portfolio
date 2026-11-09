@@ -16,3 +16,7 @@ All six photos below were provided by the portfolio owner, and saved as **pixel-
 **Missing photos:** Aftermath (`aftermath.jpg`), Quill Quest (`quill-quest.jpg`), Trivia Night (`trivia-night.jpg`), Gemini Hackday 2.0 (`gemini-hackday.jpg`), Renaissance (`renaissance.jpg`), Hermes AI Agent Workshop (`hermes-workshop.jpg`), IBM Workshop (`ibm-workshop.jpg`), and 7 Weeks of CP (`7-weeks-of-cp.jpg`). These cards show comic placeholders until matching photos are added.
 
 Edit entries and relative image paths in `data.js`. Each card preserves image proportions with CSS `object-fit: cover` for the allocated card frame; the source image bytes are unchanged.
+
+## Additional intro assets · November 2026
+
+The `introCarouselImages` list in `data.js` adds eleven unique owner-provided photos. Previously uploaded exact duplicates are reused from the existing event assets. Missing Renaissance, Gemini Hackday, and 7 Weeks of CP event artwork has been restored and mapped to WebP files. All carousel images are hosted in this GitHub repository. Slides advance every 600 ms and skip missing files.

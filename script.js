@@ -537,7 +537,8 @@
     if (!reel) return;
     const urls = [...new Set([
       ...(data.events || []).map(item => item.image),
-      ...(data.achievements || []).map(item => item.image)
+      ...(data.achievements || []).map(item => item.image),
+      ...(data.introCarouselImages || [])
     ].filter(Boolean))];
     const validate = url => new Promise(resolve => {
       const img = new Image();
@@ -565,7 +566,7 @@
         next.classList.add('is-on');
         current.classList.remove('is-on');
         current = next;
-      }, 900);
+      }, 600);
     });
   }
   initChrome(); initCinematicIntro(); initComicIntroReel(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initParticipatedEvents(); initPhotoViewer(); initReveals(); initMotion();

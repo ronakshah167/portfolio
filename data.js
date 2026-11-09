@@ -65,6 +65,19 @@ window.PORTFOLIO_DATA = {
     }
   ],
   // Participation is deliberately separate from awards and competition wins.
+  introCarouselImages: [
+    'assets/events/reel-01-auditorium.webp',
+    'assets/events/reel-02-team.webp',
+    'assets/events/reel-03-group.webp',
+    'assets/events/reel-04-speaker.webp',
+    'assets/events/reel-05-collaboration.webp',
+    'assets/events/reel-06-speaking.webp',
+    'assets/events/reel-07-alpine.webp',
+    'assets/events/reel-08-forest.webp',
+    'assets/events/reel-09-football.webp',
+    'assets/events/reel-10-paris.webp',
+    'assets/events/reel-11-night.webp',
+  ],
   participatedEvents: [
     {id:'climate-hackathon',title:'Climate Hackathon',type:'Hackathon',certificate:{type:'pdf',url:'assets/documents/climate-hackathon-certificate.pdf'}},
     {id:'sih-2025',title:'SIH 2025',type:'Hackathon'},
@@ -84,13 +97,13 @@ window.PORTFOLIO_DATA = {
     {"id":"aftermath","era":"second","name":"AFTERMATH","type":"24-Hour Hackathon","org":"KJSCE ACM Student Chapter","role":"Operations · PR · marketing · reel production","description":"Worked across on-ground operations, public relations, and marketing for a 24-hour hackathon. Created and edited reels to deliver sponsor-facing content.","accent":"blue","image":"assets/events/aftermath.jpg","label":"24 HOURS. ALL IN."},
     {"id":"quill-quest","era":"second","name":"QUILL QUEST","type":"Clue-Based Treasure Hunt","org":"Team Illuminati · Literary Council","role":"PR Head · promotion & outreach","description":"Led PR for a treasure-hunt-style event in which participants solved clues, unlocked new challenges, and collected points.","accent":"pink","image":"assets/events/quill-quest.jpg","label":"FOLLOW THE CLUES"},
     {"id":"trivia-night","era":"second","name":"TRIVIA NIGHT","type":"Campus Quiz Night","org":"Team Illuminati · Literary Council","role":"Independent ideation · organization · sponsor acquisition","description":"Independently conceived and ran Illuminati’s first standalone event—and its first with a prize pool. Secured a sponsor and arranged ₹3,000 in prizes.","accent":"lime","image":"assets/events/trivia-night.jpg","label":"₹3,000 PRIZES"},
-    {"id":"gemini-hackday","era":"third","name":"GEMINI HACKDAY 2.0","type":"Hackathon · MLH Collaboration","org":"Campus organizers · Major League Hacking (MLH)","role":"Organizing support & coordination","description":"Helped organize Gemini Hackday 2.0 in collaboration with Major League Hacking, with a ₹10,000 prize pool.","accent":"blue","image":"assets/events/gemini-hackday.png","label":"BUILD WITH AI"},
+    {"id":"gemini-hackday","era":"third","name":"GEMINI HACKDAY 2.0","type":"Hackathon · MLH Collaboration","org":"Campus organizers · Major League Hacking (MLH)","role":"Organizing support & coordination","description":"Helped organize Gemini Hackday 2.0 in collaboration with Major League Hacking, with a ₹10,000 prize pool.","accent":"blue","image":"assets/events/gemini-hackday.webp","label":"BUILD WITH AI"},
     {"id":"rtp-5","era":"third","name":"RTP 5.0 · ROAD TO PROGRAMMING","type":"Programming Event","org":"CSI KJSSE","role":"Sponsorship outreach · PR · operations · team coordination","description":"Managed sponsor outreach, public relations, and event operations while coordinating teams and council activities. The event filled a 250-seat auditorium.","accent":"orange","image":"assets/events/rtp-5.webp","position":"50% 46%","label":"250 SEATS. FULL."},
-    {"id":"renaissance","era":"third","name":"RENAISSANCE","type":"Mini Buildathon","org":"CSI KJSSE · Abhyantriki","role":"Original concept · event name · planning & execution","description":"Personally initiated the buildathon concept, came up with the name Renaissance, and helped drive planning and execution. The event featured ₹15,000 in cash prizes.","accent":"lime","image":"assets/events/renaissance.jpg","label":"₹15,000 AT STAKE"},
+    {"id":"renaissance","era":"third","name":"RENAISSANCE","type":"Mini Buildathon","org":"CSI KJSSE · Abhyantriki","role":"Original concept · event name · planning & execution","description":"Personally initiated the buildathon concept, came up with the name Renaissance, and helped drive planning and execution. The event featured ₹15,000 in cash prizes.","accent":"lime","image":"assets/events/renaissance.webp","label":"₹15,000 AT STAKE"},
     {"id":"hermes-workshop","era":"third","name":"HERMES AI AGENT WORKSHOP","type":"AI Agent Workshop","org":"CSI KJSSE · Abhyantriki","role":"Workshop organization & coordination","description":"Helped organize a hands-on workshop on RMe’s AI agent, held ahead of the Renaissance buildathon.","accent":"violet","image":"assets/events/hermes-workshop.jpg","label":"BUILD AN AGENT"},
     {"id":"council-handover","era":"third","name":"COUNCIL HANDOVER","type":"Council Transition","org":"CSI KJSSE","role":"Handover organization & coordination","description":"Organized the transition from the outgoing council tenure to the incoming council team.","accent":"pink","image":"assets/events/council-handover.webp","position":"50% 46%","label":"PASSING THE TORCH"},
     {"id":"dough-and-demo","era":"third","name":"DOUGH & DEMO","type":"Campus Community Event","org":"CSI KJSSE · ChatGPT-focused collaboration","role":"Event organization · partner coordination","description":"Helped organize Dough & Demo, where every participant received complimentary ChatGPT Plus access.","accent":"lime","image":"assets/events/dough-and-demo.webp","position":"50% 39%","label":"DOUGH. DEMO. IDEAS."},
     {"id":"ibm-workshop","era":"third","name":"IBM WORKSHOP","type":"Department Workshop","org":"Computer Engineering Department · IBM","role":"Workshop organization & logistics","description":"Helped organize an IBM workshop for the Computer Engineering department.","accent":"blue","image":"assets/events/ibm-workshop.jpg","label":"INDUSTRY INSIGHTS"},
-    {"id":"7weekscp","era":"third","name":"7 WEEKS OF CP","type":"Online Competitive Programming Series","org":"KJSCE ACM Student Chapter","role":"PR · campaign promotion · poster design","description":"Managed public relations and designed the event poster for an online initiative helping students learn and practice competitive programming.","accent":"orange","image":"assets/events/7-weeks-of-cp.png","label":"7 WEEKS. KEEP CODING."},
+    {"id":"7weekscp","era":"third","name":"7 WEEKS OF CP","type":"Online Competitive Programming Series","org":"KJSCE ACM Student Chapter","role":"PR · campaign promotion · poster design","description":"Managed public relations and designed the event poster for an online initiative helping students learn and practice competitive programming.","accent":"orange","image":"assets/events/7-weeks-of-cp.webp","label":"7 WEEKS. KEEP CODING."},
   ]
 };
