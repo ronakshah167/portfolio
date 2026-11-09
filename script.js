@@ -535,38 +535,65 @@
   function initComicIntroReel() {
     const reel = document.querySelector('.comic-intro-reel');
     if (!reel) return;
-    const urls = [...new Set([
-      ...(data.events || []).map(item => item.image),
-      ...(data.achievements || []).map(item => item.image),
-      ...(data.introCarouselImages || [])
-    ].filter(Boolean))];
-    const validate = url => new Promise(resolve => {
-      const img = new Image();
-      img.onload = () => resolve(url);
-      img.onerror = () => resolve(null);
-      img.src = url;
-    });
-    Promise.all(urls.map(validate)).then(found => {
-      const photos = found.filter(Boolean);
+
+    // A deliberately curated photo-only reel: no posters, background screenshots
+    // or graphics from the event gallery are automatically injected.
+    const slides = (data.introCarouselImages || [])
+      .map(item => typeof item === 'string'
+        ? { src:item, position:'50% 30%' }
+        : { src:item.src, position:item.position || '50% 30%' })
+      .filter(item => item.src && /^assets\/events\/[\w.-]+\.(webp|png|jpe?g)$/i.test(item.src))
+      .filter((item,i,arr) => arr.findIndex(x => x.src === item.src) === i);
+
+    function verify(slide) {
+      return new Promise(resolve => {
+        const image = new Image();
+        image.onload = () => resolve(image.naturalWidth >= 200 && image.naturalHeight >= 200 ? slide : null);
+        image.onerror = () => resolve(null);
+        image.src = slide.src;
+      });
+    }
+
+    function showPhoto(layer, photo) {
+      // The full-resolution foreground photo is always fitted INSIDE the frame.
+      // A softly blurred backdrop fills the leftover space without cutting faces.
+      const img = layer.querySelector('img');
+      img.src = photo.src;
+      img.alt = '';
+      img.style.objectPosition = photo.position;
+      layer.style.backgroundImage = 'url(' + JSON.stringify(photo.src) + ')';
+    }
+
+    Promise.all(slides.map(verify)).then(results => {
+      const photos = results.filter(Boolean);
       if (!photos.length) return;
-      const front = document.createElement('div');
-      front.className = 'comic-reel-shot is-live is-on';
-      front.style.backgroundImage = 'url(' + JSON.stringify(photos[0]) + ')';
-      reel.replaceChildren(front);
+      const makeLayer = () => {
+        const layer = document.createElement('div');
+        layer.className = 'comic-reel-shot is-live';
+        const img = document.createElement('img');
+        img.className = 'comic-reel-portrait';
+        img.alt = '';
+        img.decoding = 'async';
+        img.draggable = false;
+        layer.append(img);
+        return layer;
+      };
+      const front = makeLayer();
+      const back = makeLayer();
+      showPhoto(front, photos[0]);
+      front.classList.add('is-on');
+      reel.replaceChildren(front,back);
       if (reducedMotion.matches || photos.length === 1) return;
-      const back = document.createElement('div');
-      back.className = 'comic-reel-shot is-live';
-      reel.append(back);
-      let position=0, current=front;
+      let index = 0, current = front;
       window.setInterval(() => {
         if (document.documentElement.dataset.intro !== 'on') return;
-        position = (position + 1) % photos.length;
-        const next = current === front ? back : front;
-        next.style.backgroundImage = 'url(' + JSON.stringify(photos[position]) + ')';
-        next.classList.add('is-on');
+        index = (index+1) % photos.length;
+        const incoming = current === front ? back : front;
+        showPhoto(incoming, photos[index]);
+        incoming.classList.add('is-on');
         current.classList.remove('is-on');
-        current = next;
-      }, 600);
+        current = incoming;
+      }, 550);
     });
   }
   initChrome(); initCinematicIntro(); initComicIntroReel(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initParticipatedEvents(); initPhotoViewer(); initReveals(); initMotion();

@@ -67,14 +67,25 @@ window.PORTFOLIO_DATA = {
   // Participation is deliberately separate from awards and competition wins.
   // Curated face-visible intro photographs. Exclude back-facing shots, posters
   // and the earlier Marvel-shirt auditorium photograph from the intro only.
+  // Handpicked real photographs only; posters, graphic screenshots and back-facing shots excluded.
+  // Backgrounds use contain framing in the player so people are not cropped.
   introCarouselImages: [
-    'assets/events/reel-02-team.webp',
-    'assets/events/reel-03-group.webp',
-    'assets/events/reel-04-speaker.webp',
-    'assets/events/reel-05-collaboration.webp',
-    'assets/events/reel-06-speaking.webp',
-    'assets/events/reel-07-alpine.webp',
-    'assets/events/reel-10-paris.webp',
+    {src:'assets/events/reel-02-team.webp',position:'50% 30%'},
+    {src:'assets/events/reel-03-group.webp',position:'50% 29%'},
+    {src:'assets/events/reel-04-speaker.webp',position:'50% 24%'},
+    {src:'assets/events/reel-05-collaboration.webp',position:'50% 32%'},
+    {src:'assets/events/reel-06-speaking.webp',position:'50% 30%'},
+    {src:'assets/events/reel-07-alpine.webp',position:'50% 28%'},
+    {src:'assets/events/reel-10-paris.webp',position:'50% 29%'},
+    {src:'assets/events/beyond-the-classroom.webp',position:'50% 28%'},
+    {src:'assets/events/artemis.webp',position:'50% 28%'},
+    {src:'assets/events/rtp-5.webp',position:'50% 30%'},
+    {src:'assets/events/dough-and-demo.webp',position:'50% 30%'},
+    {src:'assets/events/council-handover.webp',position:'50% 28%'},
+    {src:'assets/events/climate-hack.webp',position:'50% 29%'},
+    {src:'assets/events/case-quest.webp',position:'50% 29%'},
+    {src:'assets/events/renaissance.webp',position:'50% 29%'},
+    {src:'assets/events/gemini-hackday.webp',position:'50% 29%'},
   ],
   participatedEvents: [
     {id:'climate-hackathon',title:'Climate Hackathon',type:'Hackathon',certificate:{type:'pdf',url:'assets/documents/climate-hackathon-certificate.pdf'}},
