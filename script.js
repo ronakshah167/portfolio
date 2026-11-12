@@ -84,6 +84,21 @@
   }
 
 
+  function initScrollToTop() {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'scroll-to-top';
+    button.setAttribute('aria-label','Scroll back to top');
+    button.title = 'Back to top';
+    button.textContent = '↑';
+    document.body.append(button);
+    const update = () => button.classList.toggle('is-visible',
+      window.scrollY > Math.max(450, innerHeight * .7) && document.documentElement.dataset.intro !== 'on');
+    window.addEventListener('scroll', update, {passive:true});
+    button.addEventListener('click', () => window.scrollTo({top:0,behavior:reducedMotion.matches ? 'instant' : 'smooth'}));
+    update();
+  }
+
   function initThemeAndBack() {
     const root = document.documentElement;
     const toggle = $('.theme-toggle');
@@ -545,56 +560,61 @@
       .filter(item => item.src && /^assets\/events\/[\w.-]+\.(webp|png|jpe?g)$/i.test(item.src))
       .filter((item,i,arr) => arr.findIndex(x => x.src === item.src) === i);
 
-    function verify(slide) {
-      return new Promise(resolve => {
+    // Load only the first frames initially; prefetch the next photograph as needed.
+    if (!slides.length) return;
+    const cache = new Map();
+    function preload(i) {
+      const slot = (i+slides.length)%slides.length;
+      if (!cache.has(slot)) cache.set(slot,new Promise(resolve => {
         const image = new Image();
-        image.onload = () => resolve(image.naturalWidth >= 200 && image.naturalHeight >= 200 ? slide : null);
-        image.onerror = () => resolve(null);
-        image.src = slide.src;
-      });
+        image.onload=()=>resolve(image.naturalWidth >= 200 && image.naturalHeight >= 200);
+        image.onerror=()=>resolve(false);
+        image.src=slides[slot].src;
+      }));
+      return cache.get(slot);
     }
-
-    function showPhoto(layer, photo) {
-      // The full-resolution foreground photo is always fitted INSIDE the frame.
-      // A softly blurred backdrop fills the leftover space without cutting faces.
-      const img = layer.querySelector('img');
-      img.src = photo.src;
-      img.alt = '';
-      img.style.objectPosition = photo.position;
-      layer.style.backgroundImage = 'url(' + JSON.stringify(photo.src) + ')';
+    function showPhoto(layer,photo) {
+      const img=layer.querySelector('img');
+      img.src=photo.src;
+      img.alt='';
+      img.style.objectPosition=photo.position;
+      layer.style.backgroundImage='url('+JSON.stringify(photo.src)+')';
     }
-
-    Promise.all(slides.map(verify)).then(results => {
-      const photos = results.filter(Boolean);
-      if (!photos.length) return;
-      const makeLayer = () => {
-        const layer = document.createElement('div');
-        layer.className = 'comic-reel-shot is-live';
-        const img = document.createElement('img');
-        img.className = 'comic-reel-portrait';
-        img.alt = '';
-        img.decoding = 'async';
-        img.draggable = false;
-        layer.append(img);
-        return layer;
-      };
-      const front = makeLayer();
-      const back = makeLayer();
-      showPhoto(front, photos[0]);
+    function makeLayer() {
+      const el=document.createElement('div');
+      el.className='comic-reel-shot is-live';
+      const img=document.createElement('img');
+      img.className='comic-reel-portrait';img.alt='';img.decoding='async';img.draggable=false;
+      el.append(img);return el;
+    }
+    preload(0).then(ok => {
+      if (!ok) return;
+      const front=makeLayer(),back=makeLayer();
+      showPhoto(front,slides[0]);
       front.classList.add('is-on');
       reel.replaceChildren(front,back);
-      if (reducedMotion.matches || photos.length === 1) return;
-      let index = 0, current = front;
-      window.setInterval(() => {
-        if (document.documentElement.dataset.intro !== 'on') return;
-        index = (index+1) % photos.length;
-        const incoming = current === front ? back : front;
-        showPhoto(incoming, photos[index]);
-        incoming.classList.add('is-on');
-        current.classList.remove('is-on');
-        current = incoming;
-      }, 550);
+      if (reducedMotion.matches || slides.length===1) return;
+      preload(1);
+      let current=front,index=0,busy=false;
+      window.setInterval(async () => {
+        if (document.documentElement.dataset.intro!=='on' || busy) return;
+        busy=true;
+        let next=(index+1)%slides.length,ready=false;
+        for (let i=0;i<slides.length;i++,next=(next+1)%slides.length) {
+          if (await preload(next)) {ready=true;break;}
+        }
+        if (ready && document.documentElement.dataset.intro==='on') {
+          const incoming=current===front?back:front;
+          showPhoto(incoming,slides[next]);
+          incoming.classList.add('is-on');
+          current.classList.remove('is-on');
+          current=incoming;
+          index=next;
+          preload((index+1)%slides.length);
+        }
+        busy=false;
+      },550);
     });
   }
-  initChrome(); initCinematicIntro(); initComicIntroReel(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initParticipatedEvents(); initPhotoViewer(); initReveals(); initMotion();
+  initChrome(); initScrollToTop(); initCinematicIntro(); initComicIntroReel(); initThemeAndBack(); initProjects(); initExperience(); initEvents(); initAchievements(); initParticipatedEvents(); initPhotoViewer(); initReveals(); initMotion();
 })();
