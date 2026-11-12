@@ -55,12 +55,12 @@ window.PORTFOLIO_DATA = {
     {
       id: 'finance-case-study',
       category: 'FINANCE / CASE STUDY',
-      title: 'Finance Domain Case Study',
+      title: 'Case Quest — Finance Domain',
       result: '1ST PLACE',
       image: 'assets/events/case-quest.webp',
       symbol: '01',
       accent: 'lime',
-      description: 'Secured first place in a finance-focused case study competition. The team photograph from Case Quest belongs to this case-study feature.'
+      description: 'Won Case Quest in the Finance domain. The award and team photograph document this first-place case-study achievement.'
     },
     {
       id: 'the-big-short',
