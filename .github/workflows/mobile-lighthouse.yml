@@ -15,6 +15,13 @@ jobs:
       - name: Run Lighthouse on the production mobile site
         run: |
           npx --yes lighthouse@12.8.2 'https://www.ronak-shah-portfolio.xyz/' --quiet --chrome-flags='--headless --no-sandbox' --only-categories=performance --form-factor=mobile --screenEmulation.mobile=true --output=json --output-path=/tmp/lighthouse-mobile.json
+      - name: Verify themed 404 response
+        run: |
+          status=$(curl --location --silent --show-error --output /tmp/portfolio-404.html --write-out '%{http_code}' 'https://www.ronak-shah-portfolio.xyz/this-page-should-not-exist-404-verification')
+          echo "HTTP status: $status"
+          test "$status" = '404'
+          grep -q 'THIS PAGE HAS VANISHED' /tmp/portfolio-404.html
+          echo 'Comic 404 page verified'
       - name: Report mobile page load metrics
         run: |
           python3 - <<'PY'
