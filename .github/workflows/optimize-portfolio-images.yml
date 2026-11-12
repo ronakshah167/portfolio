@@ -1,0 +1,59 @@
+name: Optimize portfolio images
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/optimize-portfolio-images.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+      - name: Install image compression dependency
+        run: python -m pip install 'Pillow==11.3.0'
+      - name: Optimize the large images without changing URLs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from io import BytesIO
+          from PIL import Image, ImageOps
+          before=after=count=0
+          files=list(Path('assets/events').glob('*'))+list(Path('assets/intro').glob('*'))+list(Path('.').glob('*.jpg'))+list(Path('.').glob('*.jpeg'))
+          for path in files:
+              if not path.is_file() or path.suffix.lower() not in {'.webp','.jpg','.jpeg'}: continue
+              size=path.stat().st_size
+              if size < 180000: continue
+              try:
+                  with Image.open(path) as original:
+                      picture=ImageOps.exif_transpose(original).convert('RGB')
+                      picture.thumbnail((1800,1800),Image.Resampling.LANCZOS)
+                      buf=BytesIO()
+                      if path.suffix.lower()=='.webp':
+                          picture.save(buf,format='WEBP',quality=78,method=6)
+                      else:
+                          picture.save(buf,format='JPEG',quality=79,optimize=True,progressive=True)
+                      optimized=buf.getvalue()
+                      if len(optimized)<size*.88:
+                          path.write_bytes(optimized)
+                          count+=1;before+=size;after+=len(optimized)
+              except Exception as error:
+                  print(f'Skipped {path.name}: {type(error).__name__}')
+          print(f'Optimized {count} images, saved {before-after} bytes (before {before}, after {after}).')
+          PY
+      - name: Commit optimized assets to main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/events assets/intro '*.jpg' '*.jpeg'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Optimize image bytes for faster loading [skip ci]'
+            git push
+          fi
