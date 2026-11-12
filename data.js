@@ -14,11 +14,19 @@ window.PORTFOLIO_DATA = {
     { id:'class-buddy', number:'03', title:'CLASS BUDDY', kicker:'An upgrade for the classroom', category:'WEB / SYSTEMS', accent:'orange', stamp:'ZAP!', year:'2025', description:'A smart timetable and classroom scheduling system with role-based dashboards, adaptive scheduling, classroom allocation, and lecture updates.', stack:['Next.js','React','Firebase','TypeScript'], github:'https://github.com/ronakshah167/sih2025', live:'https://sih2025-coral.vercel.app/', featured:true },
     { id:'spotify', number:'04', title:'SPOTIFY PULSE', kicker:'Music, translated into data', category:'DATA / DESIGN', accent:'pink', stamp:'BEAT!', year:'2026', description:'An interactive music analytics dashboard that makes multilingual Spotify trends, artists, and listening patterns easy to explore.', stack:['React','Recharts','PapaParse','JavaScript'], github:'https://github.com/ronakshah167/Spotifycasestudy', live:null, featured:true },
     { id:'hacktrack', number:'05', title:'HACKTRACK', kicker:'Attendance, reimagined', category:'WEB / SYSTEMS', accent:'violet', stamp:'SCAN!', year:'2025', description:'An attendance platform combining class schedules with student and teacher experiences, QR-based check-ins, selfie review, and attendance insights.', stack:['React','TypeScript','Vite','Node.js'], github:'https://github.com/ronakshah167/HackTrack-devsemble', live:'https://studiq-flowfinal.vercel.app/', featured:true },
-    { id:'crowdflow', number:'06', title:'CROWDFLOW', kicker:'The stadium gets a digital twin', category:'WEB / SYSTEMS', accent:'blue', stamp:'GO!', year:'2026', description:'A stadium-oriented digital experience built around event discovery, interactive venue selection, rich visual interfaces, and supporting services.', stack:['Next.js','Three.js','Framer Motion','MongoDB'], github:'https://github.com/ronakshah167/crowdflow', live:null, featured:false },
-    { id:'agri', number:'07', title:'AGRI ADVISORY', kicker:'Smarter farming, clearer decisions', category:'WEB / DATA', accent:'lime', stamp:'GROW!', year:'2026', description:'A farmer-facing agriculture portal for advisory requests, soil information, weather, agricultural products, and user feedback.', stack:['PHP','MySQL','JavaScript','CSS'], github:'https://github.com/ronakshah167/AgriAdvisory', live:null, featured:false },
+    { id:'crowdflow', number:'06', title:'CROWDFLOW', kicker:'The stadium gets a digital twin', category:'WEB / SYSTEMS', accent:'blue', stamp:'GO!', year:'2026', description:'A stadium-oriented digital experience built around event discovery, interactive venue selection, rich visual interfaces, and supporting services.', stack:['Next.js','Three.js','Framer Motion','MongoDB'], github:'https://github.com/ronakshah167/crowdflow', live:'https://crowdflow-ebon.vercel.app', featured:false },
+    { id:'agri', number:'07', title:'AGRI ADVISORY', kicker:'Smarter farming, clearer decisions', category:'WEB / DATA', accent:'lime', stamp:'GROW!', year:'2026', description:'A farmer-facing agriculture portal for advisory requests, soil information, weather, agricultural products, and user feedback.', stack:['PHP','MySQL','JavaScript','CSS'], github:'https://github.com/ronakshah167/AgriAdvisory', live:'https://agri-advisory.vercel.app', featured:false },
     { id:'finance', number:'08', title:'FINANCIAL FILE ENGINE', kicker:'Messy spreadsheets to structured insights', category:'DATA / FINANCE', accent:'orange', stamp:'ZIP!', year:'2026', description:'A Flask-based financial data workflow that accepts CSV files, parses financial information, previews outputs, and generates formatted Excel workbooks.', stack:['Python','Flask','CSV','Excel'], github:'https://github.com/ronakshah167/automated-file-conversion', live:null, featured:false },
     { id:'stock', number:'09', title:'MARKET LENS', kicker:'From numbers to narratives', category:'DATA / FINANCE', accent:'pink', stamp:'UP!', year:'2026', description:'A stock-sector analysis project comparing cables and wires companies using financial datasets, interactive charts, and company-level visualizations.', stack:['JavaScript','Python','HTML / CSS','Financial Data'], github:'https://github.com/ronakshah167/Stock-Analysis-Cables-Wires', live:null, featured:false },
-    { id:'lab', number:'10', title:'DJANGO VIRTUAL LAB', kicker:'Learn by actually trying', category:'WEB / SYSTEMS', accent:'violet', stamp:'TRY!', year:'2026', description:'An educational virtual lab for Django URL mapping, dynamic path parameters, interactive simulations, and hands-on exercises.', stack:['Django','Python','HTML / CSS','JavaScript'], github:'https://github.com/ronakshah167/virtual-lab-fsdl', live:null, featured:false }
+    { id:'lab', number:'10', title:'DJANGO VIRTUAL LAB', kicker:'Learn by actually trying', category:'WEB / SYSTEMS', accent:'violet', stamp:'TRY!', year:'2026', description:'An educational virtual lab for Django URL mapping, dynamic path parameters, interactive simulations, and hands-on exercises.', stack:['Django','Python','HTML / CSS','JavaScript'], github:'https://github.com/ronakshah167/virtual-lab-fsdl', live:'https://virtual-lab-fsdl.vercel.app', featured:false }
+,
+    { id:'rr-selector',number:'11',title:"RR SUPER SELECTOR",kicker:'Extra chapter',category:"DATA / ML",accent:'pink',stamp:'NEW!',year:'2026',description:"Private pressure-first cricket scouting and match-state performance analysis based on proprietary organizer data.",stack:["Python","Machine Learning","Cricket Analytics"],github:null,live:null,note:"Private project · demo withheld",featured:false },
+    { id:'assignment-completor',number:'12',title:"ASSIGNMENT COMPLETOR",kicker:'Extra chapter',category:"AI / TOOLS",accent:'blue',stamp:'NEW!',year:'2026',description:"Turns lab handouts into editable reports, code and output evidence; full functionality requires its desktop companion.",stack:["JavaScript","AI","Automation"],github:"https://github.com/ronakshah167/assignmentcompletor",live:"https://assignment-completor.vercel.app",featured:false },
+    { id:'agentbench',number:'13',title:"AGENTBENCH OBSERVATORY",kicker:'Extra chapter',category:"AI / AGENTS",accent:'lime',stamp:'NEW!',year:'2026',description:"Compares versioned AI agent harnesses through task outcomes, reliability, tool traces and evaluation reports.",stack:["AI Agents","Benchmarking","JavaScript"],github:"https://github.com/ronakshah167/Ai-agents-benchmark-platform",live:"https://agentbench-observatory.swoonycondor.chatgpt.site",featured:false },
+    { id:'tuition-centre',number:'14',title:"EXCELLENCE ENGLISH CLASSES",kicker:'Extra chapter',category:"FREELANCE / WEB",accent:'violet',stamp:'NEW!',year:'2026',description:"Tuition-centre platform with enrollments, student-parent access and an administration dashboard.",stack:["Full Stack","Student Portal"],github:"https://github.com/ronakshah167/diptishah-s_excellence_english_classes",live:"https://diptishah-s-excellence-english-clas.vercel.app",featured:false },
+    { id:'loreal',number:'15',title:"L'ORÉAL PROJECT",kicker:'Extra chapter',category:"PROJECT / EXPERIMENT",accent:'orange',stamp:'NEW!',year:'2026',description:"An additional project in the development archive.",stack:["Project Work"],github:"https://github.com/ronakshah167/loreal",live:null,featured:false },
+    { id:'stock-trends',number:'16',title:"STOCK MARKET TREND ANALYSIS",kicker:'Extra chapter',category:"DATA / FINANCE",accent:'pink',stamp:'NEW!',year:'2026',description:"Financial time-series analysis exploring five years of stock data with Linear Regression and LSTM experiments.",stack:["Python","Regression","LSTM"],github:"https://github.com/ronakshah167/Stock-Market-Trend-Anaysis",live:null,featured:false },
+    { id:'scraping-study',number:'17',title:"WEB SCRAPING RESEARCH",kicker:'Extra chapter',category:"RESEARCH / AUTOMATION",accent:'blue',stamp:'NEW!',year:'2026',description:"Research repository on automated data collection and website access restrictions.",stack:["Automation","Web Research"],github:"https://github.com/ronakshah167/Recaptha-Bypass-For-Web-scraping",live:null,featured:false }
   ],
   experience: [
     {role:'Investment & Equity Intern',org:'DSP Asset Management',date:'JUN — AUG 2026',type:'industry',index:'01',summary:'Where code met the markets.',details:['Built Python scrapers and automated Excel/CSV processing and financial-data cleaning workflows.','Developed stock-trend analysis and machine-learning models with Pandas, NumPy, and Scikit-learn.','Researched equity markets, company fundamentals, investment strategies, and macroeconomic trends.'],tags:['Python','Equity Research','Machine Learning'],document:{label:'VIEW CERTIFICATE',url:'assets/documents/dsp-certificate.pdf'}},
@@ -34,6 +42,16 @@ window.PORTFOLIO_DATA = {
 
   // Verified from the uploaded resume. Add further results and links here when confirmed.
   achievements: [
+    {
+      id: 'climate-hack',
+      category: 'CLIMATE / HACKATHON',
+      title: 'Climate Hack',
+      result: 'HACKATHON WINNER',
+      image: 'assets/events/climate-hack.webp',
+      symbol: '★',
+      accent: 'blue',
+      description: 'Won a climate-focused hackathon.'
+    },
     {
       id: 'finance-case-study',
       category: 'FINANCE / CASE STUDY',
@@ -52,16 +70,6 @@ window.PORTFOLIO_DATA = {
       symbol: '03',
       accent: 'violet',
       description: 'Placed third in a quantitative trading event focused on machine learning.'
-    },
-    {
-      id: 'climate-hack',
-      category: 'CLIMATE / HACKATHON',
-      title: 'Climate Hack',
-      result: 'HACKATHON WINNER',
-      image: 'assets/events/climate-hack.webp',
-      symbol: '★',
-      accent: 'blue',
-      description: 'Won a climate-focused hackathon.'
     }
   ],
   // Participation is deliberately separate from awards and competition wins.
