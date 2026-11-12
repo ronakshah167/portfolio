@@ -3,3 +3,9 @@
 node_modules/
 dist/
 .env
+
+# Never publish local provider credentials
+.env.*
+!.env.example
+.vercel/
+*.log
