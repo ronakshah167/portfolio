@@ -1,0 +1,33 @@
+name: Mobile Lighthouse performance audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mobile-lighthouse.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Run Lighthouse on the production mobile site
+        run: |
+          npx --yes lighthouse@12.8.2 'https://www.ronak-shah-portfolio.xyz/' --quiet --chrome-flags='--headless --no-sandbox' --only-categories=performance --form-factor=mobile --screenEmulation.mobile=true --output=json --output-path=/tmp/lighthouse-mobile.json
+      - name: Report mobile page load metrics
+        run: |
+          python3 - <<'PY'
+          import json,os
+          data=json.load(open('/tmp/lighthouse-mobile.json'))
+          audits=data.get('audits',{})
+          score=data.get('categories',{}).get('performance',{}).get('score')
+          labels=[('First Contentful Paint','first-contentful-paint'),('Largest Contentful Paint','largest-contentful-paint'),('Speed Index','speed-index'),('Total Blocking Time','total-blocking-time'),('Cumulative Layout Shift','cumulative-layout-shift')]
+          lines=['## Mobile Lighthouse (production)',f'Performance score: {round(score*100) if score is not None else "n/a"}/100']
+          for label,key in labels:
+              item=audits.get(key,{})
+              lines.append(f'{label}: {item.get("displayValue","n/a")}')
+          out='\n'.join(lines)
+          print(out)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write(out+'\n')
+          PY
