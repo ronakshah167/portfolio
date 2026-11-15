@@ -125,9 +125,8 @@ Other competitions and events featured include SIH, Nexolve, GDG, Thinksprint, A
 
 ```text
 portfolio/
-├── index.html             # Landing page & cinematic intro
+├── index.html             # Landing page, cinematic intro, and projects
 ├── work.html              # Experience and leadership
-├── projects.html          # Technical projects
 ├── events.html            # Events and organising experience
 ├── achievements.html      # Awards and participation
 ├── data.js                # Portfolio content and image mappings
