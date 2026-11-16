@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4eedf">
+  <meta name="description" content="A Cristiano Ronaldo-inspired, seven-penalty shootout on Ronak Shah's comic portfolio.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;600;700;800&display=swap">
+  <script>
+    try {
+      const saved = localStorage.getItem('ronak-portfolio-theme');
+      const theme = saved === 'dark' || saved === 'light' ? saved
+        : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+    } catch (_) {}
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="siu-shootout.css">
+  <script src="data.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="siu-shootout.js" defer></script>
+  <title>SIU! Shootout — Ronak Shah</title>
+</head>
+<body data-page="shootout">
+  <div id="site-header"></div>
+  <main id="main-content" class="shell shootout">
+    <a class="page-back" data-back href="index.html"><span aria-hidden="true">←</span> BACK TO PORTFOLIO</a>
+    <header class="shootout-title">
+      <div>
+        <p class="shootout-kicker">PORTFOLIO ARCADE / CR7</p>
+        <h1><span>SIU!</span> SHOOTOUT</h1>
+        <p>Seven penalties, one keeper. Watch the keeper move and shoot into an open lane.</p>
+      </div>
+      <span class="shirt" aria-hidden="true"><small>RONALDO</small>7</span>
+    </header>
+    <section class="shootout-panel" aria-label="Penalty shootout">
+      <div class="shootout-score">
+        <span>GOALS <strong id="goals">0</strong></span>
+        <ol id="attempts" class="attempts" aria-label="Seven penalty results"></ol>
+        <span>BEST <strong id="best">0</strong></span>
+      </div>
+      <div class="shootout-field" id="pitch" aria-hidden="true">
+        <div class="pitch-box"></div>
+        <div class="shootout-net">
+          <div class="goal-lane"></div><div class="goal-lane"></div><div class="goal-lane"></div>
+          <span id="keeper" class="keeper"></span>
+        </div>
+        <span id="ball" class="shootout-ball">⚽</span>
+        <span id="burst" class="shootout-burst" hidden></span>
+      </div>
+      <div class="shootout-controls" id="shootout-controls" aria-describedby="shootout-help">
+        <button type="button" data-lane="0" disabled>← Left</button>
+        <button type="button" data-lane="1" disabled>↑ Centre</button>
+        <button type="button" data-lane="2" disabled>Right →</button>
+      </div>
+      <p class="shootout-status" id="match-status" role="status">Press Kick off to start.</p>
+      <div class="shootout-bottom">
+        <button type="button" id="kick-off" class="kick-off">Kick off</button>
+        <p id="shootout-help">Tap a lane or use the arrow keys.</p>
+      </div>
+      <noscript>Enable JavaScript to play the shootout.</noscript>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>
