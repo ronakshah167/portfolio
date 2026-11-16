@@ -121,6 +121,10 @@ Highlights include:
 
 Other competitions and events featured include SIH, Nexolve, GDG, Thinksprint, Adobe University Hackathon, and Unstop Week of Wins.
 
+## ⚽ SIU! Shootout
+
+[Play the penalty shootout](https://www.ronak-shah-portfolio.xyz/siu-shootout.html). Pick a lane, beat the keeper across seven shots, and try to set a new personal best.
+
 ## 📂 Project Structure
 
 ```text
